@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function PostCard({ post }) {
-  return <div>bio: {post.bio}</div>;
+  return (
+    <div>
+      {post.image ? <img src={post.image} alt="" /> : null}
+    </div>
+  );
 }

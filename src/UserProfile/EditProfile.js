@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import API from "../API";
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -10,19 +9,19 @@ export default class EditProfile extends Component {
       last_name: "",
       username: "",
       email: "",
+      image: "",
     };
   }
 
   componentDidMount() {
-    API.get(`users/${this.props.match.params.id}`).then((user) =>
-      this.setState({
-        first_name: user.first_name,
-        last_name: user.last_name,
-        username: user.username,
-        email: user.email,
-        loading: false,
-      })
-    );
+    this.setState({
+      first_name: this.props.user.first_name,
+      last_name: this.props.user.last_name,
+      username: this.props.user.username,
+      email: this.props.user.email,
+      loading: false,
+      image: this.props.user.profile_pic,
+    });
   }
 
   render() {
@@ -31,7 +30,16 @@ export default class EditProfile extends Component {
         {this.state.loading ? (
           <h1>Loading...</h1>
         ) : (
-          <form onSubmit={this.handleEditProfile}>
+          <form
+            onSubmit={(e) => this.props.handleEditProfile(e, this.state.image)}
+          >
+            <input
+              type="file"
+              name="files"
+              onChange={(e) => this.fileChange(e)}
+              accept=".png, .jpg, .jpeg"
+            />
+            <img src={this.state.image} alt="" />
             <label>First Name:</label>
             <input
               type="text"
@@ -71,24 +79,28 @@ export default class EditProfile extends Component {
             <input type="submit" value="Save" />
           </form>
         )}
+        <button onClick={this.props.goBack}>Go back</button>
       </div>
     );
   }
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  fileChange = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "PostImages");
+    this.setState({ loading: true });
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/petatude/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
 
-  handleEditProfile = (e) => {
-    e.preventDefault();
-    const body = {
-      user: {
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        username: this.state.username,
-        email: this.state.email,
-      },
-    };
-    API.patch(`users/${this.props.match.params.id}`, body);
-    this.props.history.push(`/user_profile/${this.props.match.params.id}`);
+    this.setState({ image: file.secure_url, loading: false });
   };
 }

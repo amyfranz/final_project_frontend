@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import API from "../API";
 
 export default class PetAddOrEdit extends Component {
   constructor(props) {
@@ -7,24 +6,37 @@ export default class PetAddOrEdit extends Component {
     this.state = {
       name: "",
       bio: "",
+      image: "",
+      loading: false,
     };
   }
 
   componentDidMount() {
-    if (this.props.match.path.includes("edit_pet")) {
-      API.get(`pets/${this.props.match.params.id}`).then((pet) =>
-        this.setState({
-          name: pet.name,
-          bio: pet.bio,
-        })
-      );
+    if (this.props.pet) {
+      this.setState({
+        name: this.props.pet.name,
+        bio: this.props.pet.bio,
+        image: this.props.pet.profile_pic,
+      });
     }
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleAddOrEditPet}>
+        <form onSubmit={(e) => this.props.submit(e, this.state.image)}>
+          <h1>Preview Image</h1>
+          <input
+            type="file"
+            name="files"
+            onChange={(e) => this.fileChange(e)}
+            accept=".png, .jpg, .jpeg"
+          />
+          {this.state.loading ? (
+            <h3>Loading...</h3>
+          ) : (
+            <img src={this.state.image} alt="" />
+          )}
           <label>Name:</label>
           <input
             type="text"
@@ -45,6 +57,7 @@ export default class PetAddOrEdit extends Component {
           />
           <input type="submit" value="Save" />
         </form>
+        <button onClick={this.props.goBack}>Go back</button>
       </div>
     );
   }
@@ -52,20 +65,21 @@ export default class PetAddOrEdit extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleAddOrEditPet = (e) => {
-    e.preventDefault();
-    const body = {
-      pet: {
-        name: this.state.name,
-        bio: this.state.bio,
-        user_id: this.props.LoggedUserId,
-      },
-    };
-    if (this.props.match.path.includes("edit_pet")) {
-      API.patch(`pets/${this.props.match.params.id}`, body);
-    } else {
-      API.post("pets", body);
-    }
-    this.props.history.goBack();
+  fileChange = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "PostImages");
+    this.setState({ loading: true });
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/petatude/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+
+    this.setState({ image: file.secure_url, loading: false });
   };
 }

@@ -11,6 +11,8 @@ export default class SignIn extends Component {
       email: "",
       password: "",
       password_confirmation: "",
+      image: "",
+      loading: false,
     };
   }
 
@@ -27,8 +29,9 @@ export default class SignIn extends Component {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
+        profile_pic: this.state.image,
       },
-    }).then(() => this.props.history.push("/login"));
+    }).then(() => this.props.changeLogIn());
   };
 
   addUserToState = (e) => {
@@ -39,6 +42,18 @@ export default class SignIn extends Component {
     return (
       <div>
         <form onSubmit={this.onFormSubmit}>
+          <input
+            type="file"
+            name="files"
+            onChange={(e) => this.fileChange(e)}
+            accept=".png, .jpg, .jpeg"
+            required
+          />
+          {this.state.loading ? (
+            <h3>Loading...</h3>
+          ) : (
+            <img src={this.state.image} alt="" />
+          )}
           <input
             type="text"
             name="first_name"
@@ -83,8 +98,25 @@ export default class SignIn extends Component {
           ></input>
           <input type="submit" value="Submit" />
         </form>
-        <p onClick={this.props.changeLogIn}>Already A User? Log In</p>
+        <p onClick={() => this.props.changeLogIn()}>Already A User? Log In</p>
       </div>
     );
   }
+  fileChange = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "PostImages");
+    this.setState({ loading: true });
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/petatude/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+
+    this.setState({ image: file.secure_url, loading: false });
+  };
 }

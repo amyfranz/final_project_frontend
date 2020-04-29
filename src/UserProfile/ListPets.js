@@ -15,7 +15,6 @@ export default function ListPets({ pets, props }) {
       : null;
   return (
     <div>
-      <h1>Owner of:</h1>
       {petsMap}
     </div>
   );

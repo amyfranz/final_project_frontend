@@ -1,8 +1,7 @@
 import React from "react";
 import DisplayComments from "./DisplayComments";
-import NewComment from "./NewComment";
 
-export default function Comments({ comments, handleNewComment, userLogged }) {
+export default function Comments({ comments }) {
   return (
     <div>
       <h1>Comments:</h1>
@@ -11,7 +10,6 @@ export default function Comments({ comments, handleNewComment, userLogged }) {
         .map((comment, index) => (
           <DisplayComments comment={comment} key={index} />
         ))}
-      {userLogged ? null : <NewComment handleNewComment={handleNewComment} />}
     </div>
   );
 }

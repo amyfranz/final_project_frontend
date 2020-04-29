@@ -4,38 +4,9 @@ import PetStats from "./PetStats";
 import PetBtns from "./PetBtns";
 import Posts from "../containers/Posts";
 import PetBtnNotLoggedUser from "./PetBtnNotLoggedUser";
+import PetAddOrEdit from "../PetsProfile/PetAddOrEdit";
+import PostPic from "../PostPic/PostPic";
 import API from "../API";
-
-// export default function PetProfile({
-//   pet,
-//   loggedUser,
-//   handlePageChange,
-//   handleNewFollow,
-// }) {
-//   return (
-//     <div>
-//       hello
-//       {/* <PetsInfo pet={pet} />
-//       <PetStats pet={pet} />
-//       {loggedUser.pets.includes(pet) ? (
-//         <PetBtns handlePageChange={handlePageChange} pet={pet} />
-//       ) : (
-//         <PetBtnNotLoggedUser
-//           followed={
-//             pet.followings.find(
-//               (following) => following.user_id === loggedUser.id
-//             )
-//               ? true
-//               : false
-//           }
-//           handleNewFollow={handleNewFollow}
-//         />
-//       )}
-//       <Posts posts={pet.posts} handlePageChange={handlePageChange} /> */}
-//     </div>
-//   );
-// }
-
 import React, { Component } from "react";
 
 export default class PetProfile extends Component {
@@ -44,6 +15,8 @@ export default class PetProfile extends Component {
     this.state = {
       pet: "",
       loading: true,
+      editing: false,
+      posting: false,
     };
   }
 
@@ -52,6 +25,9 @@ export default class PetProfile extends Component {
       this.setState({ pet, loading: false });
     });
   }
+  componentWillUnmount() {
+    this.setState({ pet: "", loading: true });
+  }
   render() {
     return (
       <div>
@@ -59,45 +35,73 @@ export default class PetProfile extends Component {
           <h1>Loading..</h1>
         ) : (
           <div>
-            <PetsInfo pet={this.state.pet} />
-            <PetStats pet={this.state.pet} />
-            {this.state.pet.user_id === this.props.LoggedUserId ? (
-              <PetBtns
-                editPet={this.editPet}
-                deletePet={this.deletePet}
-                newPost={this.newPost}
-              />
+            {!this.state.editing ? (
+              <div>
+                {!this.state.posting ? (
+                  <div>
+                    <PetsInfo pet={this.state.pet} />
+                    <PetStats
+                      pet={this.state.pet}
+                      viewFollowers={this.viewFollowers}
+                    />
+                    {this.state.pet.user_id === this.props.LoggedUserId ? (
+                      <PetBtns
+                        editPet={this.editPet}
+                        deletePet={this.deletePet}
+                        newPost={this.newPost}
+                      />
+                    ) : (
+                      <PetBtnNotLoggedUser
+                        followed={
+                          this.state.pet.followings.find(
+                            (following) =>
+                              following.user_id === this.props.LoggedUserId
+                          )
+                            ? true
+                            : false
+                        }
+                        handleNewFollow={this.handleNewFollow}
+                      />
+                    )}
+                    <Posts posts={this.state.pet.posts} props={this.props} />
+                  </div>
+                ) : (
+                  <PostPic submit={this.submitNewPost} goBack={this.goBack} />
+                )}
+              </div>
             ) : (
-              <PetBtnNotLoggedUser
-                followed={
-                  this.state.pet.followings.find(
-                    (following) => following.user_id === this.props.LoggedUserId
-                  )
-                    ? true
-                    : false
-                }
-                handleNewFollow={this.handleNewFollow}
+              <PetAddOrEdit
+                pet={this.state.pet}
+                submit={this.handleEditPet}
+                goBack={this.goBack}
               />
             )}
-            <Posts posts={this.state.pet.posts} props={this.props} />
           </div>
         )}
       </div>
     );
   }
+  goBack = () => {
+    this.setState({ editing: false, posting: false });
+  };
   editPet = () => {
-    this.props.history.push(`/edit_pet/${this.state.pet.id}`);
+    this.setState({ editing: true });
   };
 
   newPost = () => {
-    this.props.history.push(`/post_pic/${this.state.pet.id}`);
+    this.setState({ posting: true });
   };
 
   deletePet = () => {
-    alert("pet deleted");
+    const q = "To delete your pet, please type 'delete'";
+    var response = prompt(q);
+    if (response === "delete") {
+      API.destroy(`pets/${this.state.pet.id}`).then((e) =>
+        this.props.history.push(`/user_profile/${this.props.LoggedUserId}`)
+      );
+    }
   };
   handleNewFollow = (e, followed) => {
-    debugger;
     e.preventDefault();
     const body = {
       following: {
@@ -105,14 +109,45 @@ export default class PetProfile extends Component {
         user_id: this.props.LoggedUserId,
       },
     };
+    const follow = this.state.pet.followings.find(
+      (follow) => follow.user_id === this.props.LoggedUserId
+    );
     followed
-      ? API.post("followings", body)
-      : API.destroy(
-          `followings/${
-            this.state.pet.followings.find(
-              (follow) => follow.user_id === this.props.LoggedUserId
-            ).id
-          }`
-        );
+      ? API.post("followings", body).then((pet) => this.setState({ pet }))
+      : API.destroy(`followings/${follow.id}`)
+          .then((res) => res.json())
+          .then((pet) => this.setState({ pet }));
+  };
+  viewFollowers = () => {
+    this.props.history.push(`/list_pets_followers/${this.state.pet.id}`);
+  };
+
+  handleEditPet = (e, image) => {
+    e.preventDefault();
+    const body = {
+      pet: {
+        name: e.target.name.value,
+        bio: e.target.bio.value,
+        profile_pic: image,
+      },
+    };
+    API.patch(`pets/${this.state.pet.id}`, body).then((pet) => {
+      this.setState({ pet, editing: false });
+    });
+  };
+
+  submitNewPost = (e, image) => {
+    e.preventDefault();
+    const body = {
+      post: {
+        bio: e.target.bio.value,
+        pet_id: this.state.pet.id,
+        posted: Date.now,
+        image: image,
+      },
+    };
+    API.post("posts", body).then((pet) =>
+      this.setState({ pet, posting: false })
+    );
   };
 }

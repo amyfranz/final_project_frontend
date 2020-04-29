@@ -2,27 +2,7 @@
 import PostInfo from "./PostInfo";
 import PostStats from "./PostStats";
 import Comments from "./Comments";
-
-// export default function ShowPost({ userLogged }) {
-//   componentD
-//   return (
-//     <div>
-//       <PostInfo post={post} />
-//       <PostStats
-//         post={post}
-//         handleNewLike={handleNewLike}
-//         userLogged={userLogged}
-//         liked={liked}
-//       />
-//       <Comments
-//         comments={post.comments}
-//         handleNewComment={handleNewComment}
-//         userLogged={userLogged}
-//       />
-//     </div>
-//   );
-// }
-
+import NewComment from "./NewComment";
 import React, { Component } from "react";
 import API from "../API";
 
@@ -32,9 +12,9 @@ export default class ShowPost extends Component {
     this.state = { post: "", loading: true };
   }
   componentDidMount() {
-    API.get(`posts/${this.props.match.params.id}`).then((post) =>
-      this.setState({ post, loading: false })
-    );
+    API.get(`posts/${this.props.match.params.id}`).then((post) => {
+      this.setState({ post, loading: false });
+    });
   }
 
   render() {
@@ -48,20 +28,15 @@ export default class ShowPost extends Component {
             <PostStats
               post={this.state.post}
               handleNewLike={this.handleNewLike}
-              userLogged={this.props.LoggedUserId}
-              liked={
-                this.state.post.likes.find(
-                  (like) => like.user.id === this.props.LoggedUserId
-                )
-                  ? true
-                  : false
-              }
             />
             <Comments
               comments={this.state.post.comments}
               handleNewComment={this.handleNewComment}
               userLogged={this.props.LoggedUserId}
             />
+            {this.state.post.owner_id === this.props.LoggedUserId ? null : (
+              <NewComment handleNewComment={this.handleNewComment} />
+            )}
           </div>
         )}
       </div>
@@ -77,14 +52,16 @@ export default class ShowPost extends Component {
       },
     };
     liked
-      ? API.post("likes", body)
+      ? API.post("likes", body).then((post) => this.setState({ post }))
       : API.destroy(
           `likes/${
             this.state.post.likes.find(
-              (like) => like.user.id === this.props.user.id
+              (like) => like.user.id === this.props.LoggedUserId
             ).id
           }`
-        );
+        )
+          .then((res) => res.json())
+          .then((post) => this.setState({ post }));
   };
   handleNewComment = (e) => {
     e.preventDefault();
@@ -96,6 +73,6 @@ export default class ShowPost extends Component {
         created_at: Date.now(),
       },
     };
-    API.post("comments", body);
+    API.post("comments", body).then((post) => this.setState({ post }));
   };
 }
