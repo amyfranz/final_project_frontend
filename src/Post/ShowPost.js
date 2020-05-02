@@ -9,7 +9,7 @@ import API from "../API";
 export default class ShowPost extends Component {
   constructor() {
     super();
-    this.state = { post: "", loading: true };
+    this.state = { post: "", owner_id: "", loading: true };
   }
   componentDidMount() {
     API.get(`posts/${this.props.match.params.id}`).then((post) => {
@@ -26,6 +26,7 @@ export default class ShowPost extends Component {
           <div>
             <PostInfo post={this.state.post} />
             <PostStats
+              LoggedUserId={this.props.LoggedUserId}
               post={this.state.post}
               handleNewLike={this.handleNewLike}
             />
@@ -34,9 +35,7 @@ export default class ShowPost extends Component {
               handleNewComment={this.handleNewComment}
               userLogged={this.props.LoggedUserId}
             />
-            {this.state.post.owner_id === this.props.LoggedUserId ? null : (
-              <NewComment handleNewComment={this.handleNewComment} />
-            )}
+            <NewComment handleNewComment={this.handleNewComment} />
           </div>
         )}
       </div>
@@ -56,7 +55,7 @@ export default class ShowPost extends Component {
       : API.destroy(
           `likes/${
             this.state.post.likes.find(
-              (like) => like.user.id === this.props.LoggedUserId
+              (like) => like.user_id === this.props.LoggedUserId
             ).id
           }`
         )

@@ -6,6 +6,7 @@ import ShowPost from "../Post/ShowPost";
 import Search from "../Search/Search.js";
 import ListUserFollowings from "../components/ListUserFollowings";
 import ListPetsFollowers from "../components/ListPetsFollowers";
+import Updates from "../updates/updates"
 import NavBar from "../components/NavBar";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 
@@ -31,7 +32,11 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Header signOut={this.handleSignOut} history={this.props.history} />
+        <Header
+          signOut={this.handleSignOut}
+          history={this.props.history}
+          LoggedUserId={this.props.user}
+        />
         <div>
           <Route
             exact
@@ -69,6 +74,10 @@ class Dashboard extends Component {
           <Route
             path={`/list_user_following/:id`}
             render={(routerProps) => <ListUserFollowings {...routerProps} />}
+          />
+          <Route
+            path={`/updates`}
+            render={(routerProps) => <Updates {...routerProps} LoggedUserId={this.props.user} />}
           />
         </div>
         <NavBar history={this.props.history} LoggedUserId={this.props.user} />

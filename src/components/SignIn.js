@@ -31,7 +31,11 @@ export default class SignIn extends Component {
         password: this.state.password,
         profile_pic: this.state.image,
       },
-    }).then(() => this.props.changeLogIn());
+    }).then((user) => {
+      user.messages
+        ? user.messages.map((message) => alert(message))
+        : this.props.changeLogIn();
+    });
   };
 
   addUserToState = (e) => {
@@ -41,7 +45,11 @@ export default class SignIn extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onFormSubmit}>
+        <form
+          onSubmit={(e) =>
+            this.state.loading ? this.isLoading(e) : this.onFormSubmit(e)
+          }
+        >
           <input
             type="file"
             name="files"
@@ -118,5 +126,9 @@ export default class SignIn extends Component {
     const file = await res.json();
 
     this.setState({ image: file.secure_url, loading: false });
+  };
+  isLoading = (e) => {
+    e.preventDefault();
+    alert("please wait till the image is loaded");
   };
 }

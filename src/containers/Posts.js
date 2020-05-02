@@ -5,7 +5,6 @@ export default function Posts({ posts, props }) {
   return (
     <div>
       {posts
-        .sort((a, b) => (a.posted < b.posted ? 1 : -1))
         .map((post, index) => (
           <div
             key={index}

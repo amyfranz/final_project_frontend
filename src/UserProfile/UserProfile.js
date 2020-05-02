@@ -131,7 +131,9 @@ export default class UserProfile extends Component {
       },
     };
     API.post("pets", body).then((user) => {
-      this.setState({ user, edit: false, editing: "" });
+      user.message
+        ? alert(user.message)
+        : this.setState({ user, edit: false, editing: "" });
     });
   };
 }

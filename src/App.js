@@ -121,15 +121,19 @@ export default class App extends Component {
     if (token) {
       this.setState({ user, authenticated: true });
       localStorage.token = token;
+    } else {
+      alert("Sign in details are incorrect");
     }
   };
 
   signOut = () => {
-    this.setState({
-      user: null,
-      authenticated: false,
+    API.get(`signout/${this.state.user}`).then((e) => {
+      this.setState({
+        user: null,
+        authenticated: false,
+      });
+      localStorage.removeItem("token");
     });
-    localStorage.removeItem("token");
   };
 
   LogInFormSubmit = (event, data) => {

@@ -8,7 +8,13 @@ export default class PostPic extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={(e) => this.props.submit(e, this.state.image)}>
+        <form
+          onSubmit={(e) =>
+            this.state.loading
+              ? this.isLoading(e)
+              : this.props.submit(e, this.state.image)
+          }
+        >
           <h1>Preview Image</h1>
           <input
             type="file"
@@ -55,5 +61,10 @@ export default class PostPic extends Component {
 
   bioChange = (e) => {
     this.setState({ bio: e.target.value });
+  };
+
+  isLoading = (e) => {
+    e.preventDefault();
+    alert("please wait till the image is loaded");
   };
 }

@@ -4,7 +4,7 @@ export default class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loading: false,
       first_name: "",
       last_name: "",
       username: "",
@@ -19,7 +19,6 @@ export default class EditProfile extends Component {
       last_name: this.props.user.last_name,
       username: this.props.user.username,
       email: this.props.user.email,
-      loading: false,
       image: this.props.user.profile_pic,
     });
   }
@@ -27,58 +26,62 @@ export default class EditProfile extends Component {
   render() {
     return (
       <div>
-        {this.state.loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <form
-            onSubmit={(e) => this.props.handleEditProfile(e, this.state.image)}
-          >
-            <input
-              type="file"
-              name="files"
-              onChange={(e) => this.fileChange(e)}
-              accept=".png, .jpg, .jpeg"
-            />
+        <form
+          onSubmit={(e) =>
+            this.state.loading
+              ? this.isLoading(e)
+              : this.props.handleEditProfile(e, this.state.image)
+          }
+        >
+          <input
+            type="file"
+            name="files"
+            onChange={(e) => this.fileChange(e)}
+            accept=".png, .jpg, .jpeg"
+          />
+          {this.state.loading ? (
+            <h3>Loading...</h3>
+          ) : (
             <img src={this.state.image} alt="" />
-            <label>First Name:</label>
-            <input
-              type="text"
-              value={this.state.first_name}
-              name="first_name"
-              placeholder="First Name"
-              onChange={this.handleChange}
-              required
-            />
-            <label>Last Name:</label>
-            <input
-              type="text"
-              value={this.state.last_name}
-              name="last_name"
-              placeholder="Last Name"
-              onChange={this.handleChange}
-              required
-            />
-            <label>Username:</label>
-            <input
-              type="text"
-              value={this.state.username}
-              name="username"
-              placeholder="Username"
-              onChange={this.handleChange}
-              required
-            />
-            <label>Email:</label>
-            <input
-              type="email"
-              value={this.state.email}
-              name="email"
-              placeholder="Email"
-              onChange={this.handleChange}
-              required
-            />
-            <input type="submit" value="Save" />
-          </form>
-        )}
+          )}
+          <label>First Name:</label>
+          <input
+            type="text"
+            value={this.state.first_name}
+            name="first_name"
+            placeholder="First Name"
+            onChange={this.handleChange}
+            required
+          />
+          <label>Last Name:</label>
+          <input
+            type="text"
+            value={this.state.last_name}
+            name="last_name"
+            placeholder="Last Name"
+            onChange={this.handleChange}
+            required
+          />
+          <label>Username:</label>
+          <input
+            type="text"
+            value={this.state.username}
+            name="username"
+            placeholder="Username"
+            onChange={this.handleChange}
+            required
+          />
+          <label>Email:</label>
+          <input
+            type="email"
+            value={this.state.email}
+            name="email"
+            placeholder="Email"
+            onChange={this.handleChange}
+            required
+          />
+          <input type="submit" value="Save" />
+        </form>
         <button onClick={this.props.goBack}>Go back</button>
       </div>
     );
@@ -102,5 +105,9 @@ export default class EditProfile extends Component {
     const file = await res.json();
 
     this.setState({ image: file.secure_url, loading: false });
+  };
+  isLoading = (e) => {
+    e.preventDefault();
+    alert("please wait till the image is loaded");
   };
 }
