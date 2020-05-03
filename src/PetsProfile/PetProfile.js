@@ -138,12 +138,14 @@ export default class PetProfile extends Component {
 
   submitNewPost = (e, image) => {
     e.preventDefault();
+    debugger;
     const body = {
       post: {
         bio: e.target.bio.value,
         pet_id: this.state.pet.id,
         posted: Date.now,
         image: image,
+        effect: e.target.effect.value,
       },
     };
     API.post("posts", body).then((pet) =>

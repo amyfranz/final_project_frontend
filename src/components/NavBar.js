@@ -9,6 +9,7 @@ export default function NavBar({ history, LoggedUserId }) {
         </li>
         <li onClick={(e) => history.push("/search")}>search</li>
         <li onClick={(e) => history.push("/updates")}>updates</li>
+        <li onClick={(e) => history.push("/browse")}>browse</li>
       </ul>
     </div>
   );

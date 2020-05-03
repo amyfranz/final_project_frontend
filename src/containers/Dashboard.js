@@ -6,9 +6,10 @@ import ShowPost from "../Post/ShowPost";
 import Search from "../Search/Search.js";
 import ListUserFollowings from "../components/ListUserFollowings";
 import ListPetsFollowers from "../components/ListPetsFollowers";
-import Updates from "../updates/updates"
+import Updates from "../updates/updates";
+import BrowsePosts from "../BrowsePosts/BrowsePosts";
 import NavBar from "../components/NavBar";
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor() {
@@ -77,7 +78,13 @@ class Dashboard extends Component {
           />
           <Route
             path={`/updates`}
-            render={(routerProps) => <Updates {...routerProps} LoggedUserId={this.props.user} />}
+            render={(routerProps) => (
+              <Updates {...routerProps} LoggedUserId={this.props.user} />
+            )}
+          />
+          <Route
+            path={`/browse`}
+            render={(routerProps) => <BrowsePosts {...routerProps} />}
           />
         </div>
         <NavBar history={this.props.history} LoggedUserId={this.props.user} />

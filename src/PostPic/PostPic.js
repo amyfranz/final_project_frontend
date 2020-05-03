@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import ShowImage from "../components/ShowImage";
 
 export default class PostPic extends Component {
   constructor() {
     super();
-    this.state = { image: "", loading: false };
+    this.state = { image: "", effect: "auto_color", loading: false };
   }
   render() {
     return (
@@ -26,7 +27,235 @@ export default class PostPic extends Component {
           {this.state.loading ? (
             <h3>Loading...</h3>
           ) : (
-            <img src={this.state.image} alt="" />
+            <div>
+              <ShowImage
+                image={this.state.image.split("/").slice(-1)[0].split(".")[0]}
+                effect={this.state.effect}
+              />
+              <div>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="auto_color"
+                  defaultChecked
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>None</p>
+                  <img src={this.state.image} alt="" />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:al_dente"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Al Dente</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:al_dente"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:audrey"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Audrey</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:audrey"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:aurora"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Aurora</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:aurora"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:daguerre"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Daguerre</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:daguerre"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:eucalyptus"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Eucalyptus</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:eucalyptus"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:fes"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Fes</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:fes"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:frost"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Frost</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:frost"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:hairspray"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Hairspray</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:hairspray"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:refresh"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Refresh</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:refresh"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:sizzle"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Sizzle</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:sizzle"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:zorro"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Zorro</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:zorro"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:incognito"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Incognito</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:incognito"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:ukulele"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Ukulele</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:ukulele"
+                  />
+                </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:peacock"
+                  onChange={this.radioButtonChange}
+                />
+                <label>
+                  <p>Peacock</p>
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="art:peacock"
+                  />
+                </label>
+              </div>
+            </div>
           )}
           <input
             type="text"
@@ -66,5 +295,8 @@ export default class PostPic extends Component {
   isLoading = (e) => {
     e.preventDefault();
     alert("please wait till the image is loaded");
+  };
+  radioButtonChange = (e) => {
+    this.setState({ effect: e.target.value });
   };
 }
