@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "../components/Header";
+import Header from "../Header/Header";
 import UserProfile from "../UserProfile/UserProfile";
 import PetProfile from "../PetsProfile/PetProfile";
 import ShowPost from "../Post/ShowPost";
@@ -8,7 +8,7 @@ import ListUserFollowings from "../components/ListUserFollowings";
 import ListPetsFollowers from "../components/ListPetsFollowers";
 import Updates from "../updates/updates";
 import BrowsePosts from "../BrowsePosts/BrowsePosts";
-import NavBar from "../components/NavBar";
+import NavBar from "../NavBar/NavBar";
 import { Route, withRouter } from "react-router-dom";
 
 class Dashboard extends Component {
@@ -38,6 +38,8 @@ class Dashboard extends Component {
           history={this.props.history}
           LoggedUserId={this.props.user}
         />
+
+        <NavBar history={this.props.history} LoggedUserId={this.props.user} />
         <div>
           <Route
             exact
@@ -87,7 +89,6 @@ class Dashboard extends Component {
             render={(routerProps) => <BrowsePosts {...routerProps} />}
           />
         </div>
-        <NavBar history={this.props.history} LoggedUserId={this.props.user} />
       </div>
     );
   }

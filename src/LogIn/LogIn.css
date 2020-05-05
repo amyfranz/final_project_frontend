@@ -1,0 +1,89 @@
+* {
+  width: 100%;
+  font-size: 25px;
+  margin: 0;
+  padding: 0;
+  color: #554e4e;
+}
+
+.LogInContainer {
+  /* height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.LogInLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LogInLogo img {
+  min-width: 400px;
+  width: 20%;
+}
+
+.LogInLogo h1 {
+  margin-top: 0.5em;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.LogInForm input {
+  width: 95%;
+  margin: 2.5% 5% 2.5% 5%;
+  border: none;
+  border-bottom: solid #6e6464;
+  padding: 0.6em 0.4em 1em;
+  box-sizing: border-box;
+  font-weight: 600;
+  color: #6e6464;
+}
+
+.LogInForm input::placeholder {
+  color: rgb(165, 159, 159);
+}
+
+.LogInForm input[type="submit"] {
+  border: none;
+  background-color: #fabf61;
+  padding: 0.5em;
+  font-size: 1.3rem;
+}
+
+.GoToNewUser {
+  margin-top: 2em;
+}
+.GoToNewUser p {
+  padding: 0 1em 1em 1em;
+  color: #6e6464;
+  text-align: center;
+}
+.LogInFormTitle {
+  display: none;
+}
+
+@media screen and (orientation: landscape) {
+  .LogInContainer {
+    flex-direction: row;
+    min-width: 900px;
+    height: 100vh;
+  }
+
+  .LogInForm {
+    margin-right: 4em;
+  }
+  .LogInFormTitle {
+    display: contents;
+    text-align: center;
+  }
+
+  .LogInFormTitle h1 {
+    font-size: 3rem;
+  }
+  .LogInLogo h1 {
+    font-size: 3rem;
+  }
+}

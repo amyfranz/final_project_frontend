@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Dashboard from "./containers/Dashboard.js";
 import Authorization from "./containers/Authorization";
-import API from "./API";
 import { BrowserRouter as Router } from "react-router-dom";
+import API from "./API.js";
 
 export default class App extends Component {
   constructor() {

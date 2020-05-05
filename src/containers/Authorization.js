@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import LogIn from "../components/LogIn";
-import SignUp from "../components/SignIn";
+import LogIn from "../LogIn/LogIn";
+import SignUp from "../SignIn/SignIn";
 
 export default class Authorization extends Component {
   constructor() {

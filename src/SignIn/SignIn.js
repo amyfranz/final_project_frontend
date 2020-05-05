@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./SignIn.css";
 import API from "../API";
 
 export default class SignIn extends Component {
@@ -43,25 +44,39 @@ export default class SignIn extends Component {
   };
 
   render() {
+    const src = this.state.image
+      ? this.state.image
+      : "assets/unkown_person.png";
     return (
-      <div>
+      <div className="SignIn">
+        <div className="SignInLogo">
+          <img src="assets/dog_logo.png" alt="" />
+          <h1 className="SignInLogoTitle">Petatude</h1>
+        </div>
         <form
           onSubmit={(e) =>
             this.state.loading ? this.isLoading(e) : this.onFormSubmit(e)
           }
+          className="SignInForm"
         >
-          <input
-            type="file"
-            name="files"
-            onChange={(e) => this.fileChange(e)}
-            accept=".png, .jpg, .jpeg"
-            required
-          />
-          {this.state.loading ? (
-            <h3>Loading...</h3>
-          ) : (
-            <img src={this.state.image} alt="" />
-          )}
+          <div className="SignInFromProfilePic">
+            <div className="SignInFromProfilePicPic">
+              {this.state.loading ? (
+                <h3>Loading...</h3>
+              ) : (
+                <img src={src} alt="" />
+              )}
+            </div>
+            <div className="SignInFromProfilePicChoose">
+              <input
+                type="file"
+                name="files"
+                onChange={(e) => this.fileChange(e)}
+                accept=".png, .jpg, .jpeg"
+                required
+              />
+            </div>
+          </div>
           <input
             type="text"
             name="first_name"
@@ -105,8 +120,8 @@ export default class SignIn extends Component {
             required
           ></input>
           <input type="submit" value="Submit" />
+          <p onClick={() => this.props.changeLogIn()}>Already A User? Log In</p>
         </form>
-        <p onClick={() => this.props.changeLogIn()}>Already A User? Log In</p>
       </div>
     );
   }
