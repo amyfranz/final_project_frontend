@@ -5,6 +5,9 @@ import ListPets from "./ListPets";
 import EditProfile from "../UserProfile/EditProfile";
 import PetAddOrEdit from "../PetsProfile/PetAddOrEdit";
 import API from "../API";
+import "./UserProfile.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default class UserProfile extends Component {
   constructor() {
@@ -27,13 +30,15 @@ export default class UserProfile extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="UserProfile">
         {this.state.loading ? (
-          <h1>Loading....</h1>
+          <div>
+            <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
+          </div>
         ) : (
           <div>
             {!this.state.edit ? (
-              <div>
+              <div className="UserProfileShowUser">
                 <div>
                   <ShowUserInfo
                     user={this.state.user}
@@ -52,11 +57,13 @@ export default class UserProfile extends Component {
                 <div>
                   {this.state.user.pets ? (
                     <div>
-                      <h1>Owner of:</h1>
-                      <ListPets
-                        pets={this.state.user.pets}
-                        props={this.props}
-                      />
+                      <h1 className="UserProfilePets">Owner of:</h1>
+                      <div className="UserProfilePetProfile">
+                        <ListPets
+                          pets={this.state.user.pets}
+                          props={this.props}
+                        />
+                      </div>
                     </div>
                   ) : null}
                 </div>

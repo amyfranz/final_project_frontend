@@ -5,14 +5,14 @@ export default function ListPets({ pets, props }) {
   const petsMap =
     pets.length > 0
       ? pets.map((pet, index) => (
-          <div
+          <div className="UserProfileDisplayPets"
             onClick={(e) => props.history.push(`/pet_profile/${pet.id}`)}
             key={index}
           >
-            <PetsInfo pet={pet} />
+            <PetsInfo pet={pet}/>
           </div>
         ))
-      : null;
+      : <h1>This user has no pets.</h1>;
   return (
     <div>
       {petsMap}
