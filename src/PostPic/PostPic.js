@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import ShowImage from "../components/ShowImage";
+import defaultImage from "../question_mark.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import "./PostPic.css";
 
 export default class PostPic extends Component {
   constructor() {
@@ -8,38 +12,51 @@ export default class PostPic extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="PostPic">
         <form
           onSubmit={(e) =>
             this.state.loading
               ? this.isLoading(e)
               : this.props.submit(e, this.state.image)
           }
+          className="PostPicForm"
         >
-          <h1>Preview Image</h1>
+          <div className="PostPicImage">
+            {this.state.loading ? (
+              <FontAwesomeIcon icon={faSpinner} spin size="6x" />
+            ) : (
+              <div className="PostPicPic">
+                {this.state.image ? (
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect={this.state.effect}
+                  />
+                ) : (
+                  <img src={defaultImage} alt="" />
+                )}
+              </div>
+            )}
+            <input
+              type="file"
+              name="files"
+              onChange={(e) => this.fileChange(e)}
+              accept=".png, .jpg, .jpeg"
+              required
+            />
+          </div>
           <input
-            type="file"
-            name="files"
-            onChange={(e) => this.fileChange(e)}
-            accept=".png, .jpg, .jpeg"
+            type="text"
+            name="bio"
+            className="BioInput"
+            placeholder="Image Bio"
+            onChange={this.bioChange}
             required
           />
-          {this.state.loading ? (
-            <h3>Loading...</h3>
-          ) : (
-            <div>
-              <ShowImage
-                image={this.state.image.split("/").slice(-1)[0].split(".")[0]}
-                effect={this.state.effect}
-              />
-              <div>
-                <input
-                  type="radio"
-                  name="effect"
-                  value="auto_color"
-                  defaultChecked
-                  onChange={this.radioButtonChange}
-                />
+          {this.state.image ? (
+            <div className="filter">
+              <div className="filterContainer">
                 <label>
                   <p>None</p>
                   <img src={this.state.image} alt="" />
@@ -47,9 +64,12 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:al_dente"
+                  value="auto_color"
+                  defaultChecked
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Al Dente</p>
                   <ShowImage
@@ -62,9 +82,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:audrey"
+                  value="art:al_dente"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Audrey</p>
                   <ShowImage
@@ -77,9 +99,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:aurora"
+                  value="art:audrey"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Aurora</p>
                   <ShowImage
@@ -92,9 +116,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:daguerre"
+                  value="art:aurora"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Daguerre</p>
                   <ShowImage
@@ -107,9 +133,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:eucalyptus"
+                  value="art:daguerre"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Eucalyptus</p>
                   <ShowImage
@@ -122,9 +150,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:fes"
+                  value="art:eucalyptus"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Fes</p>
                   <ShowImage
@@ -137,9 +167,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:frost"
+                  value="art:fes"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Frost</p>
                   <ShowImage
@@ -152,9 +184,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:hairspray"
+                  value="art:frost"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Hairspray</p>
                   <ShowImage
@@ -167,9 +201,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:refresh"
+                  value="art:hairspray"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Refresh</p>
                   <ShowImage
@@ -182,9 +218,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:sizzle"
+                  value="art:refresh"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Sizzle</p>
                   <ShowImage
@@ -197,9 +235,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:zorro"
+                  value="art:sizzle"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Zorro</p>
                   <ShowImage
@@ -212,9 +252,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:incognito"
+                  value="art:zorro"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Incognito</p>
                   <ShowImage
@@ -227,9 +269,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:ukulele"
+                  value="art:incognito"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Ukulele</p>
                   <ShowImage
@@ -242,9 +286,11 @@ export default class PostPic extends Component {
                 <input
                   type="radio"
                   name="effect"
-                  value="art:peacock"
+                  value="art:ukulele"
                   onChange={this.radioButtonChange}
                 />
+              </div>
+              <div className="filterContainer">
                 <label>
                   <p>Peacock</p>
                   <ShowImage
@@ -254,19 +300,20 @@ export default class PostPic extends Component {
                     effect="art:peacock"
                   />
                 </label>
+                <input
+                  type="radio"
+                  name="effect"
+                  value="art:peacock"
+                  onChange={this.radioButtonChange}
+                />
               </div>
             </div>
-          )}
-          <input
-            type="text"
-            name="bio"
-            placeholder="Image Bio"
-            onChange={this.bioChange}
-            required
-          />
-          <input type="submit" value="submit" />
+          ) : null}
+          <div className="PostPicBtns">
+            <input type="submit" value="Post" />
+            <button onClick={this.props.goBack}>Back</button>
+          </div>
         </form>
-        <button onClick={this.props.goBack}>Go back</button>
       </div>
     );
   }

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -25,64 +27,85 @@ export default class EditProfile extends Component {
 
   render() {
     return (
-      <div>
+      <div className="EditUser">
         <form
+          className="EditUserForm"
           onSubmit={(e) =>
             this.state.loading
               ? this.isLoading(e)
               : this.props.handleEditProfile(e, this.state.image)
           }
         >
-          <input
-            type="file"
-            name="files"
-            onChange={(e) => this.fileChange(e)}
-            accept=".png, .jpg, .jpeg"
-          />
-          {this.state.loading ? (
-            <h3>Loading...</h3>
-          ) : (
-            <img src={this.state.image} alt="" />
-          )}
-          <label>First Name:</label>
-          <input
-            type="text"
-            value={this.state.first_name}
-            name="first_name"
-            placeholder="First Name"
-            onChange={this.handleChange}
-            required
-          />
-          <label>Last Name:</label>
-          <input
-            type="text"
-            value={this.state.last_name}
-            name="last_name"
-            placeholder="Last Name"
-            onChange={this.handleChange}
-            required
-          />
-          <label>Username:</label>
-          <input
-            type="text"
-            value={this.state.username}
-            name="username"
-            placeholder="Username"
-            onChange={this.handleChange}
-            required
-          />
-          <label>Email:</label>
-          <input
-            type="email"
-            value={this.state.email}
-            name="email"
-            placeholder="Email"
-            onChange={this.handleChange}
-            required
-          />
-          <input type="submit" value="Save" />
+          <div className="EditUserProfilePic">
+            {this.state.loading ? (
+              <FontAwesomeIcon icon={faSpinner} spin size="6x" />
+            ) : (
+              <img src={this.state.image} alt="" className="EditUserImage" />
+            )}
+            <input
+              type="file"
+              name="files"
+              onChange={(e) => this.fileChange(e)}
+              accept=".png, .jpg, .jpeg"
+            />
+          </div>
+          <div className="EditUserFormField">
+            <div className="EditUserFormLabels">
+              <label><p>First Name:</p></label>
+            </div>
+            <input
+              type="text"
+              value={this.state.first_name}
+              name="first_name"
+              placeholder="First Name"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="EditUserFormField">
+            <div className="EditUserFormLabels">
+              <label><p>Last Name:</p></label>
+            </div>
+            <input
+              type="text"
+              value={this.state.last_name}
+              name="last_name"
+              placeholder="Last Name"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="EditUserFormField">
+            <div className="EditUserFormLabels">
+              <label><p>Username:</p></label>
+            </div>
+            <input
+              type="text"
+              value={this.state.username}
+              name="username"
+              placeholder="Username"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="EditUserFormField">
+            <div className="EditUserFormLabels">
+              <label><p>Email:</p></label>
+            </div>
+            <input
+              type="email"
+              value={this.state.email}
+              name="email"
+              placeholder="Email"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="EditUserBtns">
+            <input type="submit" value="Save" />
+            <button onClick={this.props.goBack}>Back</button>
+          </div>
         </form>
-        <button onClick={this.props.goBack}>Go back</button>
       </div>
     );
   }

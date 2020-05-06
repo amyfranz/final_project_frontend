@@ -1,10 +1,12 @@
-// import React from "react";
+import React, { Component } from "react";
 import PostInfo from "./PostInfo";
 import PostStats from "./PostStats";
 import Comments from "./Comments";
 import NewComment from "./NewComment";
-import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import API from "../API";
+import "./Post.css";
 
 export default class ShowPost extends Component {
   constructor() {
@@ -21,21 +23,25 @@ export default class ShowPost extends Component {
     return (
       <div>
         {this.state.loading ? (
-          <h1>Loading...</h1>
+          <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : (
-          <div>
-            <PostInfo post={this.state.post} />
-            <PostStats
-              LoggedUserId={this.props.LoggedUserId}
-              post={this.state.post}
-              handleNewLike={this.handleNewLike}
-            />
-            <Comments
-              comments={this.state.post.comments}
-              handleNewComment={this.handleNewComment}
-              userLogged={this.props.LoggedUserId}
-            />
-            <NewComment handleNewComment={this.handleNewComment} />
+          <div className="ShowPost">
+            <div className="ShowPostInfo">
+              <PostInfo post={this.state.post} />
+              <PostStats
+                LoggedUserId={this.props.LoggedUserId}
+                post={this.state.post}
+                handleNewLike={this.handleNewLike}
+              />
+            </div>
+            <div className="ShowPostComments">
+              <Comments
+                comments={this.state.post.comments}
+                handleNewComment={this.handleNewComment}
+                userLogged={this.props.LoggedUserId}
+              />
+              <NewComment handleNewComment={this.handleNewComment} />
+            </div>
           </div>
         )}
       </div>

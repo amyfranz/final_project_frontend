@@ -3,13 +3,15 @@ import DisplayComments from "./DisplayComments";
 
 export default function Comments({ comments }) {
   return (
-    <div>
+    <div className="Comments">
       <h1>Comments:</h1>
-      {comments
-        .sort((a, b) => (a.created_at < b.created_at ? -1 : 1))
-        .map((comment, index) => (
-          <DisplayComments comment={comment} key={index} />
-        ))}
+      <div className="DisplayComments">
+        {comments
+          .sort((a, b) => (a.created_at < b.created_at ? -1 : 1))
+          .map((comment, index) => (
+            <DisplayComments comment={comment} key={index} />
+          ))}
+      </div>
     </div>
   );
 }

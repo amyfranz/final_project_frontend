@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import "./PetProfile.css";
+import defaultImage from "../paw.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default class PetAddOrEdit extends Component {
   constructor(props) {
@@ -22,48 +26,61 @@ export default class PetAddOrEdit extends Component {
   }
 
   render() {
+    const src = this.state.image ? this.state.image : defaultImage;
     return (
-      <div>
+      <div className="EditOrAddPet">
         <form
+          className="EditOrAddPetForm"
           onSubmit={(e) =>
             this.state.loading
               ? this.isLoading(e)
               : this.props.submit(e, this.state.image)
           }
         >
-          <h1>Preview Image</h1>
-          <input
-            type="file"
-            name="files"
-            onChange={(e) => this.fileChange(e)}
-            accept=".png, .jpg, .jpeg"
-          />
-          {this.state.loading ? (
-            <h3>Loading...</h3>
-          ) : (
-            <img src={this.state.image} alt="" />
-          )}
-          <label>Name:</label>
-          <input
-            type="text"
-            value={this.state.name}
-            name="name"
-            placeholder="Name"
-            onChange={this.handleChange}
-            required
-          />
-          <label>Bio:</label>
-          <textarea
-            type="text"
-            value={this.state.bio}
-            name="bio"
-            placeholder="Bio"
-            onChange={this.handleChange}
-            required
-          />
-          <input type="submit" value="Save" />
+          <div className="EditOrAddPetProfilePic">
+            {this.state.loading ? (
+              <FontAwesomeIcon icon={faSpinner} spin size="6x" />
+            ) : (
+              <img src={src} alt="" className="EditOrAddPetImage" />
+            )}
+            <input
+              type="file"
+              name="files"
+              onChange={(e) => this.fileChange(e)}
+              accept=".png, .jpg, .jpeg"
+            />
+          </div>
+          <div className="EditOrAddPetFormField">
+            <div className="EditOrAddPetFormLabels">
+              <label><p>Name:</p></label>
+            </div>
+            <input
+              type="text"
+              value={this.state.name}
+              name="name"
+              placeholder="Name"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="EditOrAddPetFormField">
+            <div className="EditOrAddPetFormLabels">
+              <label><p>Bio:</p></label>
+            </div>
+            <input
+              type="text"
+              value={this.state.bio}
+              name="bio"
+              placeholder="Bio"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div className="EditOrAddPetBtns">
+            <input type="submit" value="Save" />
+            <button onClick={this.props.goBack}>Back</button>
+          </div>
         </form>
-        <button onClick={this.props.goBack}>Go back</button>
       </div>
     );
   }

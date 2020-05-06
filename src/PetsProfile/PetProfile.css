@@ -1,0 +1,184 @@
+:root {
+  font-size: 16px;
+}
+* {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: #554e4e;
+}
+
+.PetProfileInfo {
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+.PetProfileInfo .PetInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.PetProfileInfo .PetInfoInfo {
+  width: auto;
+}
+.PetProfileInfo .PetInfo h2 {
+  font-size: 2rem;
+}
+
+.PetProfileInfo .PetInfo h4 {
+  font-size: 1.3rem;
+}
+
+.PetProfileInfo .PetInfo img {
+  width: 50%;
+  max-width: 400px;
+  border: #fabf61 solid 0.3em;
+  border-radius: 100%;
+  margin-right: 1em;
+}
+.PetStats h4 {
+  width: auto;
+  font-size: 1.3rem;
+}
+
+.PetStats {
+  margin: 1em 0 0 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.PetsProfileBtns {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.PetProfileInfo button {
+  width: auto;
+  max-width: 200px;
+  border: none;
+  background-color: whitesmoke;
+  padding: 0.8em;
+  margin: 1em 0 3em 0;
+  box-shadow: 0px 10px 20px 0.5px rgba(71, 68, 52, 1);
+}
+
+.PetProfileInfo .Posts {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+}
+.PetProfileInfo .Posts .PostCard {
+  width: 85%;
+  justify-self: center;
+}
+
+.PetProfileInfo .Posts img {
+  width: 100%;
+}
+
+.EditOrAddPet {
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+.EditOrAddPetProfilePic {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: 0.5em;
+}
+.EditOrAddPetImage {
+  width: 20%;
+  min-width: 150px;
+  border: #fabf61 solid 0.3em;
+  border-radius: 100%;
+}
+
+.EditOrAddPetImage input[type="file"] {
+  display: none;
+}
+
+.EditOrAddPetFormField {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 3em;
+}
+
+.EditOrAddPetFormLabels {
+  width: 25%;
+  max-width: 150px;
+  padding-right: 2em;
+}
+
+.EditOrAddPetForm input {
+  width: 60%;
+  border: none;
+  border-bottom: solid #6e6464;
+  padding: 0.6em 0.4em 1em;
+  box-sizing: border-box;
+  font-weight: 600;
+  color: #6e6464;
+}
+
+.EditOrAddPetFormLabels p {
+  font-size: 1.3rem;
+}
+.EditOrAddPetForm input[type="file"] {
+  width: auto;
+  border: none;
+  margin-left: 1em;
+}
+.EditOrAddPetForm input::placeholder {
+  color: rgb(165, 159, 159);
+}
+
+.EditOrAddPetBtns {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.EditOrAddPetForm input[type="submit"] {
+  border: none;
+  background-color: #fabf61;
+  width: 100px;
+  padding: 0.5em;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #554e4e;
+  margin: 0 1em 0 1em;
+}
+
+.EditOrAddPetForm button {
+  border: none;
+  background-color: #fabf61;
+  width: 100px;
+  padding: 0.5em;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #554e4e;
+  margin: 0 1em 0 1em;
+}
+@media screen and (orientation: landscape) {
+  .PetProfileInfo .PetInfo h2 {
+    font-size: 4rem;
+  }
+  .PetProfileInfo .PetInfo h4 {
+    font-size: 2rem;
+  }
+  .EditOrAddPetFormLabels p {
+    font-size: 2rem;
+  }
+  .PetsProfileBtns {
+    margin-top: 2rem;
+  }
+  .PetStats {
+    margin-top: 2em;
+  }
+
+  .PetStats h4 {
+    font-size: 1.5rem;
+  }
+  .PetProfileInfo .PetInfo {
+    justify-content: space-evenly;
+  }
+}

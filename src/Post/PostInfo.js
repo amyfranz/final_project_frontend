@@ -3,7 +3,7 @@ import ShowImage from "../components/ShowImage";
 
 export default function PostInfo({ post }) {
   return (
-    <div>
+    <div className="PostImgAndBio">
       <ShowImage
         image={post.image.split("/").slice(-1)[0].split(".")[0]}
         effect={post.effect}

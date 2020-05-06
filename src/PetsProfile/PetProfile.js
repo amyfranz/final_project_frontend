@@ -1,4 +1,3 @@
-// import React from "react";
 import PetsInfo from "../components/PetsInfo";
 import PetStats from "./PetStats";
 import PetBtns from "./PetBtns";
@@ -8,6 +7,8 @@ import PetAddOrEdit from "../PetsProfile/PetAddOrEdit";
 import PostPic from "../PostPic/PostPic";
 import API from "../API";
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default class PetProfile extends Component {
   constructor() {
@@ -32,13 +33,13 @@ export default class PetProfile extends Component {
     return (
       <div>
         {this.state.loading ? (
-          <h1>Loading..</h1>
+          <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : (
           <div>
             {!this.state.editing ? (
               <div>
                 {!this.state.posting ? (
-                  <div>
+                  <div className="PetProfileInfo">
                     <PetsInfo pet={this.state.pet} />
                     <PetStats
                       pet={this.state.pet}

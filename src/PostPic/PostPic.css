@@ -1,0 +1,88 @@
+:root {
+  font-size: 16px;
+}
+* {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: #554e4e;
+}
+
+.PostPic {
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+.PostPicImage {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.PostPicPic img {
+  width: 100%;
+  max-width: 500px;
+  border: solid #fabf61;
+}
+
+.PostPicPic {
+  width: 50%;
+}
+
+.PostPicForm .BioInput {
+  width: 95%;
+  margin: 2.5% 5% 2.5% 5%;
+  border: none;
+  border-bottom: solid #6e6464;
+  padding: 0.6em 0.4em 1em;
+  box-sizing: border-box;
+  font-weight: 600;
+  color: #6e6464;
+}
+
+.PostPicImage input {
+  width: 80px;
+  background-color: #fabf61;
+  padding: 0.5em;
+}
+
+
+.PostPicBtns {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.PostPicForm input[type="submit"] {
+  border: none;
+  background-color: #fabf61;
+  width: 100px;
+  padding: 0.5em;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #554e4e;
+  margin: 0 1em 0 1em;
+}
+
+.PostPicForm button {
+  border: none;
+  background-color: #fabf61;
+  width: 100px;
+  padding: 0.5em;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #554e4e;
+  margin: 0 1em 0 1em;
+}
+
+.filter {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.filterContainer {
+  display: inline-block;
+  text-align: center;
+  width: 10%;
+  height: 15%;
+}
