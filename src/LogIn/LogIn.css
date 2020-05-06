@@ -9,9 +9,12 @@
   padding: 0;
   color: #554e4e;
 }
+@font-face {
+  font-family: "CatFont";
+  src: url("../CatFont.ttf");
+}
 
 .LogInContainer {
-  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,14 +33,21 @@
 }
 
 .LogInLogo h1 {
+  font-family: "CatFont";
   margin-top: 0.5em;
   text-align: center;
   font-size: 2rem;
 }
 
+.LogInForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .LogInForm input {
   width: 95%;
-  margin: 2.5% 5% 2.5% 5%;
+  margin: 2.5% 0 2.5% 0;
   border: none;
   border-bottom: solid #6e6464;
   padding: 0.6em 0.4em 1em;

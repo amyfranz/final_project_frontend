@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import PetsInfo from "../components/PetsInfo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import API from "../API";
+import "./ListUserFollowings.css";
 
 export default class ListUserFollowings extends Component {
   constructor() {
@@ -19,7 +22,7 @@ export default class ListUserFollowings extends Component {
     return (
       <div>
         {this.state.loading ? (
-          <h1>Loading..</h1>
+          <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : this.state.pets.length > 0 ? (
           this.state.pets.map((pet, index) => (
             <div
@@ -27,8 +30,8 @@ export default class ListUserFollowings extends Component {
                 this.props.history.push(`/pet_profile/${pet.pet.id}`)
               }
               key={index}
+              className="ListUserFollowings"
             >
-              {/* {console.log(pet.pet)} */}
               <PetsInfo pet={pet.pet} />
             </div>
           ))

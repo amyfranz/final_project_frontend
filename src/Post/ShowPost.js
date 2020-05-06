@@ -11,7 +11,7 @@ import "./Post.css";
 export default class ShowPost extends Component {
   constructor() {
     super();
-    this.state = { post: "", owner_id: "", loading: true };
+    this.state = { post: "", owner_id: "", loading: true, errors: null };
   }
   componentDidMount() {
     API.get(`posts/${this.props.match.params.id}`).then((post) => {
@@ -40,7 +40,10 @@ export default class ShowPost extends Component {
                 handleNewComment={this.handleNewComment}
                 userLogged={this.props.LoggedUserId}
               />
-              <NewComment handleNewComment={this.handleNewComment} />
+              <NewComment
+                handleNewComment={this.handleNewComment}
+                errors={this.state.errors}
+              />
             </div>
           </div>
         )}
@@ -78,7 +81,14 @@ export default class ShowPost extends Component {
         created_at: Date.now(),
       },
     };
-    API.post("comments", body).then((post) => this.setState({ post }));
+    API.post("comments", body).then((post) => {
+      post.messages
+        ? this.setState({ errors: post.messages })
+        : this.setState({ post, errors: null });
+    });
     e.target.reset();
+    setTimeout(() => {
+      this.setState({ errors: null });
+    }, 2000);
   };
 }

@@ -1,0 +1,70 @@
+:root {
+  font-size: 16px;
+}
+* {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: #554e4e;
+}
+
+.Loading {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  margin-left: 25%;
+}
+
+.ListPetsFollowers {
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+.ListPetsFollowers .ShowUserUserInfo {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.ListPetsFollowers .ShowUserProfilePic {
+  width: 30%;
+}
+
+.ListPetsFollowers .ShowUserProfilePic img {
+  width: 95%;
+  max-width: 300px;
+  border: solid #fabf61;
+  border-radius: 100%;
+}
+
+.ListPetsFollowers .ShowUserUserName {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ListPetsFollowers .ShowUserUserName h1 {
+  font-size: 2em;
+}
+.ListPetsFollowers .ShowUserUserName h2 {
+  font-size: 1.3em;
+}
+
+@media screen and (orientation: landscape) {
+  .ListPetsFollowers .ShowUserUserName h1 {
+    font-size: 3em;
+  }
+  .ListPetsFollowers .ShowUserUserName h2 {
+    font-size: 2em;
+  }
+
+  .ListPetsFollowers .ShowUserUserInfo {
+    margin-top: 3em;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}

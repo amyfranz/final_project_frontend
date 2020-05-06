@@ -17,10 +17,17 @@ export default class PostPic extends Component {
           onSubmit={(e) =>
             this.state.loading
               ? this.isLoading(e)
-              : this.props.submit(e, this.state.image)
+              : this.props.submit(e, this.state.image, this.state.effect)
           }
           className="PostPicForm"
         >
+          <div className="Errors">
+            {this.props.errors
+              ? this.props.errors.map((error, index) => (
+                  <h1 key={index}>{error}</h1>
+                ))
+              : null}
+          </div>
           <div className="PostPicImage">
             {this.state.loading ? (
               <FontAwesomeIcon icon={faSpinner} spin size="6x" />
@@ -43,7 +50,6 @@ export default class PostPic extends Component {
               name="files"
               onChange={(e) => this.fileChange(e)}
               accept=".png, .jpg, .jpeg"
-              required
             />
           </div>
           <input
@@ -52,14 +58,18 @@ export default class PostPic extends Component {
             className="BioInput"
             placeholder="Image Bio"
             onChange={this.bioChange}
-            required
           />
           {this.state.image ? (
             <div className="filter">
               <div className="filterContainer">
                 <label>
                   <p>None</p>
-                  <img src={this.state.image} alt="" />
+                  <ShowImage
+                    image={
+                      this.state.image.split("/").slice(-1)[0].split(".")[0]
+                    }
+                    effect="auto_color"
+                  />
                 </label>
                 <input
                   type="radio"

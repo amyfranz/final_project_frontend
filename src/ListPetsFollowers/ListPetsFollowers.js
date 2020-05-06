@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import API from "../API";
 import ShowUsers from "../components/ShowUsers";
+import "./ListPetsFollowers.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default class ListPetsFollowers extends Component {
   constructor() {
@@ -17,9 +20,9 @@ export default class ListPetsFollowers extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="ListPetsFollowers">
         {this.state.loading ? (
-          <h1>Loading..</h1>
+          <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : (
           this.state.users.map((user, index) => (
             <div

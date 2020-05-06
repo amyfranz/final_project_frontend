@@ -4,6 +4,8 @@ import LoggedUserBtns from "./UserBtns";
 import ListPets from "./ListPets";
 import EditProfile from "../UserProfile/EditProfile";
 import PetAddOrEdit from "../PetsProfile/PetAddOrEdit";
+import Destroy from "../Destroy/Destroy";
+import "../Destroy/Destroy.css";
 import API from "../API";
 import "./UserProfile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +19,10 @@ export default class UserProfile extends Component {
       user: "",
       edit: false,
       editing: "",
+      PetsErrors: null,
+      UserErrors: null,
+      delete: false,
+      deleteError: null,
     };
   }
   componentDidMount() {
@@ -31,6 +37,14 @@ export default class UserProfile extends Component {
   render() {
     return (
       <div className="UserProfile">
+        {this.state.delete ? (
+          <Destroy
+            handleDelete={this.handleDelete}
+            cancelDelete={this.cancelDelete}
+            type="user"
+            deleteErrors={this.state.deleteError}
+          />
+        ) : null}
         {this.state.loading ? (
           <div>
             <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
@@ -38,7 +52,11 @@ export default class UserProfile extends Component {
         ) : (
           <div>
             {!this.state.edit ? (
-              <div className="UserProfileShowUser">
+              <div
+                className={`UserProfileShowUser ${
+                  this.state.delete ? "Blur" : ""
+                }`}
+              >
                 <div>
                   <ShowUserInfo
                     user={this.state.user}
@@ -50,7 +68,7 @@ export default class UserProfile extends Component {
                     <LoggedUserBtns
                       editUser={this.editUser}
                       addPet={this.addPet}
-                      deleteProfile={this.deleteProfile}
+                      deleteProfile={() => this.setState({ delete: true })}
                     />
                   ) : null}
                 </div>
@@ -75,11 +93,13 @@ export default class UserProfile extends Component {
                     user={this.state.user}
                     handleEditProfile={this.handleEditProfile}
                     goBack={this.goBack}
+                    errors={this.state.UserErrors}
                   />
                 ) : (
                   <PetAddOrEdit
                     submit={this.handleAddPet}
                     goBack={this.goBack}
+                    errors={this.state.PetsErrors}
                   />
                 )}
               </div>
@@ -103,15 +123,22 @@ export default class UserProfile extends Component {
   viewFollowings = () => {
     this.props.history.push(`/list_user_following/${this.state.user.id}`);
   };
-
-  deleteProfile = () => {
-    const q = "To delete your user, please type 'delete'";
-    var response = prompt(q);
-    if (response === "delete") {
+  handleDelete = (e) => {
+    e.preventDefault();
+    if (e.target.delete.value === "delete") {
       API.destroy(`users/${this.props.LoggedUserId}`);
       this.props.signOut();
+      this.props.history.push("/");
+    } else {
+      this.setState({ deleteError: "you did not type 'delete' correctly" });
     }
   };
+
+  cancelProfile = (e) => {
+    e.preventDefault();
+    this.setState({ delete: false, deleteError: null });
+  };
+
   handleEditProfile = (e, image) => {
     e.preventDefault();
     const body = {
@@ -123,8 +150,12 @@ export default class UserProfile extends Component {
         profile_pic: image,
       },
     };
-    API.patch(`users/${this.state.user.id}`, body).then((user) =>
-      this.setState({ user, edit: false, editing: "" })
+    API.patch(`users/${this.state.user.id}`, body).then(
+      ({ user, messages }) => {
+        messages
+          ? this.setState({ UserErrors: messages })
+          : this.setState({ user, edit: false, editing: "" });
+      }
     );
   };
   handleAddPet = (e, image) => {
@@ -137,9 +168,9 @@ export default class UserProfile extends Component {
         profile_pic: image,
       },
     };
-    API.post("pets", body).then((user) => {
-      user.message
-        ? alert(user.message)
+    API.post("pets", body).then(({ user, messages }) => {
+      messages
+        ? this.setState({ PetsErrors: messages })
         : this.setState({ user, edit: false, editing: "" });
     });
   };

@@ -6,6 +6,8 @@ import PetBtnNotLoggedUser from "./PetBtnNotLoggedUser";
 import PetAddOrEdit from "../PetsProfile/PetAddOrEdit";
 import PostPic from "../PostPic/PostPic";
 import API from "../API";
+import Destroy from "../Destroy/Destroy";
+import "../Destroy/Destroy.css";
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +20,10 @@ export default class PetProfile extends Component {
       loading: true,
       editing: false,
       posting: false,
+      PetErrors: null,
+      PostErrors: null,
+      delete: false,
+      deleteError: null,
     };
   }
 
@@ -32,6 +38,14 @@ export default class PetProfile extends Component {
   render() {
     return (
       <div>
+        {this.state.delete ? (
+          <Destroy
+            handleDelete={this.handleDelete}
+            cancelDelete={this.cancelDelete}
+            type="user"
+            deleteErrors={this.state.deleteError}
+          />
+        ) : null}
         {this.state.loading ? (
           <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : (
@@ -39,7 +53,11 @@ export default class PetProfile extends Component {
             {!this.state.editing ? (
               <div>
                 {!this.state.posting ? (
-                  <div className="PetProfileInfo">
+                  <div
+                    className={`PetProfileInfo ${
+                      this.state.delete ? "Blur" : ""
+                    }`}
+                  >
                     <PetsInfo pet={this.state.pet} />
                     <PetStats
                       pet={this.state.pet}
@@ -48,7 +66,7 @@ export default class PetProfile extends Component {
                     {this.state.pet.user_id === this.props.LoggedUserId ? (
                       <PetBtns
                         editPet={this.editPet}
-                        deletePet={this.deletePet}
+                        deletePet={(e) => this.setState({ delete: true })}
                         newPost={this.newPost}
                       />
                     ) : (
@@ -67,7 +85,11 @@ export default class PetProfile extends Component {
                     <Posts posts={this.state.pet.posts} props={this.props} />
                   </div>
                 ) : (
-                  <PostPic submit={this.submitNewPost} goBack={this.goBack} />
+                  <PostPic
+                    submit={this.submitNewPost}
+                    goBack={this.goBack}
+                    errors={this.state.PostErrors}
+                  />
                 )}
               </div>
             ) : (
@@ -75,6 +97,7 @@ export default class PetProfile extends Component {
                 pet={this.state.pet}
                 submit={this.handleEditPet}
                 goBack={this.goBack}
+                errors={this.state.PetErrors}
               />
             )}
           </div>
@@ -93,15 +116,22 @@ export default class PetProfile extends Component {
     this.setState({ posting: true });
   };
 
-  deletePet = () => {
-    const q = "To delete your pet, please type 'delete'";
-    var response = prompt(q);
-    if (response === "delete") {
+  handleDelete = (e) => {
+    e.preventDefault();
+    if (e.target.delete.value === "delete") {
       API.destroy(`pets/${this.state.pet.id}`).then((e) =>
         this.props.history.push(`/user_profile/${this.props.LoggedUserId}`)
       );
+    } else {
+      this.setState({ deleteError: "you did not type 'delete' correctly" });
     }
   };
+
+  cancelProfile = (e) => {
+    e.preventDefault();
+    this.setState({ delete: false, deleteError: null });
+  };
+
   handleNewFollow = (e, followed) => {
     e.preventDefault();
     const body = {
@@ -132,25 +162,28 @@ export default class PetProfile extends Component {
         profile_pic: image,
       },
     };
-    API.patch(`pets/${this.state.pet.id}`, body).then((pet) => {
-      this.setState({ pet, editing: false });
+    API.patch(`pets/${this.state.pet.id}`, body).then(({ pet, messages }) => {
+      messages
+        ? this.setState({ PetErrors: messages })
+        : this.setState({ pet, editing: false, PetErrors: null });
     });
   };
 
-  submitNewPost = (e, image) => {
+  submitNewPost = (e, image, effect) => {
     e.preventDefault();
-    debugger;
     const body = {
       post: {
         bio: e.target.bio.value,
         pet_id: this.state.pet.id,
         posted: Date.now,
         image: image,
-        effect: e.target.effect.value,
+        effect: effect,
       },
     };
-    API.post("posts", body).then((pet) =>
-      this.setState({ pet, posting: false })
+    API.post("posts", body).then(({ pet, messages }) =>
+      messages
+        ? this.setState({ PostErrors: messages })
+        : this.setState({ pet, posting: false, PostErrors: null })
     );
   };
 }

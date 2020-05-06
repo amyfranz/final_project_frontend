@@ -4,12 +4,13 @@ import UserProfile from "../UserProfile/UserProfile";
 import PetProfile from "../PetsProfile/PetProfile";
 import ShowPost from "../Post/ShowPost";
 import Search from "../Search/Search.js";
-import ListUserFollowings from "../components/ListUserFollowings";
-import ListPetsFollowers from "../components/ListPetsFollowers";
+import ListUserFollowings from "../ListUserFollowings/ListUserFollowings";
+import ListPetsFollowers from "../ListPetsFollowers/ListPetsFollowers";
 import Updates from "../updates/updates";
 import BrowsePosts from "../BrowsePosts/BrowsePosts";
 import NavBar from "../NavBar/NavBar";
 import { Route, withRouter } from "react-router-dom";
+import API from "../API.js";
 
 class Dashboard extends Component {
   constructor() {
@@ -18,6 +19,7 @@ class Dashboard extends Component {
       loading: true,
     };
   }
+
   componentDidMount() {
     this.setState({
       loading: false,
@@ -31,6 +33,9 @@ class Dashboard extends Component {
   };
 
   render() {
+    window.onblur = () => {
+      API.get(`signout/${this.props.user}`);
+    };
     return (
       <div>
         <Header

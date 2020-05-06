@@ -10,6 +10,7 @@ export default class App extends Component {
     this.state = {
       user: null,
       authenticated: false,
+      errorMessage: null,
     };
   }
 
@@ -29,18 +30,21 @@ export default class App extends Component {
             <Dashboard signOut={this.signOut} user={this.state.user} />
           </Router>
         ) : (
-          <Authorization LogInFormSubmit={this.LogInFormSubmit} />
+          <Authorization
+            LogInFormSubmit={this.LogInFormSubmit}
+            error={this.state.errorMessage}
+          />
         )}
       </div>
     );
   }
 
-  SignIn = (user, token) => {
+  SignIn = (user, token, message) => {
     if (token) {
       this.setState({ user, authenticated: true });
       localStorage.token = token;
     } else {
-      alert("Sign in details are incorrect");
+      this.setState({ errorMessage: message });
     }
   };
 
@@ -49,6 +53,7 @@ export default class App extends Component {
       this.setState({
         user: null,
         authenticated: false,
+        error: null
       });
       localStorage.removeItem("token");
     });
@@ -56,8 +61,8 @@ export default class App extends Component {
 
   LogInFormSubmit = (event, data) => {
     event.preventDefault();
-    API.post("sign_in", data).then(({ user, token }) => {
-      this.SignIn(user, token);
+    API.post("sign_in", data).then(({ user, token, message }) => {
+      this.SignIn(user, token, message);
     });
   };
 }

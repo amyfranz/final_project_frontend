@@ -8,7 +8,15 @@
   color: #554e4e;
   overflow-x: hidden;
 }
+.Errors {
+  margin: 1em 0 1em 0;
+}
 
+.Errors h1 {
+  text-align: center;
+  font-size: 1rem;
+  color: #fabf61;
+}
 .Loading {
   height: 100vh;
   display: flex;

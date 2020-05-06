@@ -24,6 +24,13 @@ export default class EditProfile extends Component {
       image: this.props.user.profile_pic,
     });
   }
+  componentDidUpdate(prevProps) {
+    if (prevProps.errors !== this.props.errors) {
+      setTimeout(() => {
+        this.setState({ errors: [] });
+      }, 10000);
+    }
+  }
 
   render() {
     return (
@@ -36,6 +43,13 @@ export default class EditProfile extends Component {
               : this.props.handleEditProfile(e, this.state.image)
           }
         >
+          <div className="Errors">
+            {this.props.errors
+              ? this.props.errors.map((error, index) => (
+                  <h1 key={index}>{error}</h1>
+                ))
+              : null}
+          </div>
           <div className="EditUserProfilePic">
             {this.state.loading ? (
               <FontAwesomeIcon icon={faSpinner} spin size="6x" />
@@ -51,7 +65,9 @@ export default class EditProfile extends Component {
           </div>
           <div className="EditUserFormField">
             <div className="EditUserFormLabels">
-              <label><p>First Name:</p></label>
+              <label>
+                <p>First Name:</p>
+              </label>
             </div>
             <input
               type="text"
@@ -59,12 +75,13 @@ export default class EditProfile extends Component {
               name="first_name"
               placeholder="First Name"
               onChange={this.handleChange}
-              required
             />
           </div>
           <div className="EditUserFormField">
             <div className="EditUserFormLabels">
-              <label><p>Last Name:</p></label>
+              <label>
+                <p>Last Name:</p>
+              </label>
             </div>
             <input
               type="text"
@@ -72,12 +89,13 @@ export default class EditProfile extends Component {
               name="last_name"
               placeholder="Last Name"
               onChange={this.handleChange}
-              required
             />
           </div>
           <div className="EditUserFormField">
             <div className="EditUserFormLabels">
-              <label><p>Username:</p></label>
+              <label>
+                <p>Username:</p>
+              </label>
             </div>
             <input
               type="text"
@@ -85,20 +103,20 @@ export default class EditProfile extends Component {
               name="username"
               placeholder="Username"
               onChange={this.handleChange}
-              required
             />
           </div>
           <div className="EditUserFormField">
             <div className="EditUserFormLabels">
-              <label><p>Email:</p></label>
+              <label>
+                <p>Email:</p>
+              </label>
             </div>
             <input
-              type="email"
+              type="text"
               value={this.state.email}
               name="email"
               placeholder="Email"
               onChange={this.handleChange}
-              required
             />
           </div>
           <div className="EditUserBtns">

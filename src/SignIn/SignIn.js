@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./SignIn.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import API from "../API";
 
 export default class SignIn extends Component {
@@ -14,13 +16,15 @@ export default class SignIn extends Component {
       password_confirmation: "",
       image: "",
       loading: false,
+      errors: [],
     };
   }
 
   onFormSubmit = (event) => {
     event.preventDefault();
     if (this.state.password !== this.state.password_confirmation) {
-      alert("The user could not be created");
+      this.state.errors.push("passwords do not match");
+      this.setState({ errors: this.state.errors });
       return;
     }
     API.post("users", {
@@ -34,7 +38,7 @@ export default class SignIn extends Component {
       },
     }).then((user) => {
       user.messages
-        ? user.messages.map((message) => alert(message))
+        ? this.setState({ errors: user.messages })
         : this.props.changeLogIn();
     });
   };
@@ -50,7 +54,9 @@ export default class SignIn extends Component {
     return (
       <div className="SignIn">
         <div className="SignInLogo">
-          <img src="assets/dog_logo.png" alt="" />
+          <div className="SignInLogoImage">
+            <img src="assets/dog_logo.png" alt="" />
+          </div>
           <h1 className="SignInLogoTitle">Petatude</h1>
         </div>
         <form
@@ -59,10 +65,17 @@ export default class SignIn extends Component {
           }
           className="SignInForm"
         >
+          <div className="Errors">
+            {this.state.errors.length > 0
+              ? this.state.errors.map((error, index) => (
+                  <h1 key={index}>{error}</h1>
+                ))
+              : null}
+          </div>
           <div className="SignInFromProfilePic">
             <div className="SignInFromProfilePicPic">
               {this.state.loading ? (
-                <h3>Loading...</h3>
+                <FontAwesomeIcon icon={faSpinner} spin size="6x" />
               ) : (
                 <img src={src} alt="" />
               )}
@@ -73,7 +86,6 @@ export default class SignIn extends Component {
                 name="files"
                 onChange={(e) => this.fileChange(e)}
                 accept=".png, .jpg, .jpeg"
-                required
               />
             </div>
           </div>
@@ -82,42 +94,36 @@ export default class SignIn extends Component {
             name="first_name"
             onChange={this.addUserToState}
             placeholder="First Name"
-            required
           ></input>
           <input
             type="text"
             name="last_name"
             onChange={this.addUserToState}
             placeholder="Last Name"
-            required
           ></input>
           <input
             type="text"
             name="username"
             onChange={this.addUserToState}
             placeholder="Username"
-            required
           ></input>
           <input
             type="email"
             name="email"
             onChange={this.addUserToState}
             placeholder="Email Address"
-            required
           ></input>
           <input
             type="password"
             name="password"
             onChange={this.addUserToState}
             placeholder="Password"
-            required
           ></input>
           <input
             type="password"
             name="password_confirmation"
             onChange={this.addUserToState}
             placeholder="Password Confirmation"
-            required
           ></input>
           <input type="submit" value="Submit" />
           <p onClick={() => this.props.changeLogIn()}>Already A User? Log In</p>

@@ -1,0 +1,57 @@
+.Blur {
+  filter: blur(2px);
+  overflow: hidden;
+}
+.Delete {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  max-width: 600px;
+  background-color: rgb(243, 239, 239);
+  border: groove rgb(167, 160, 160);
+  position: fixed;
+  z-index: 100;
+}
+
+.Delete Form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.DeleteInput {
+  margin: 1em;
+  width: 80%;
+  margin: 1em;
+}
+
+.DeleteInput input {
+  width: 98%;
+}
+.DeleteInstructions h1 {
+  text-align: center;
+  font-size: 1rem;
+  margin: 1em 0 1em 0;
+}
+
+.DeleteErrors h1 {
+  text-align: center;
+  font-size: 1rem;
+  color: rgb(233, 76, 64);
+  margin: 1em 0 1em 0;
+}
+
+.DeleteBtns {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1em;
+}
+
+.DeleteBtns button {
+  width: 100px;
+  padding: 0.5em;
+  background-color: #fabf61;
+  border: none;
+}

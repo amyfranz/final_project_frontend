@@ -16,6 +16,7 @@ export default class Authorization extends Component {
           <LogIn
             LogIn={this.props.LogInFormSubmit}
             changeLogIn={this.changeLogIn}
+            error={this.props.error}
           />
         ) : (
           <SignUp changeLogIn={this.changeLogIn} />

@@ -8,6 +8,16 @@
   color: #554e4e;
 }
 
+.Errors {
+  margin-bottom: 1em;
+}
+
+.Errors h1 {
+  text-align: center;
+  font-size: 1rem;
+  color: #fabf61;
+}
+
 .PetProfileInfo {
   margin-top: 60px;
   margin-bottom: 80px;
@@ -73,6 +83,12 @@
 
 .PetProfileInfo .Posts img {
   width: 100%;
+}
+
+.PetProfileFollowing {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
 }
 
 .EditOrAddPet {
@@ -180,5 +196,9 @@
   }
   .PetProfileInfo .PetInfo {
     justify-content: space-evenly;
+  }
+
+  .PetProfileFollowing Button {
+    width: 15%;
   }
 }

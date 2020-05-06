@@ -37,6 +37,13 @@ export default class PetAddOrEdit extends Component {
               : this.props.submit(e, this.state.image)
           }
         >
+          <div className="Errors">
+            {this.props.errors
+              ? this.props.errors.map((error, index) => (
+                  <h1 key={index}>{error}</h1>
+                ))
+              : null}
+          </div>
           <div className="EditOrAddPetProfilePic">
             {this.state.loading ? (
               <FontAwesomeIcon icon={faSpinner} spin size="6x" />
@@ -52,7 +59,9 @@ export default class PetAddOrEdit extends Component {
           </div>
           <div className="EditOrAddPetFormField">
             <div className="EditOrAddPetFormLabels">
-              <label><p>Name:</p></label>
+              <label>
+                <p>Name:</p>
+              </label>
             </div>
             <input
               type="text"
@@ -60,12 +69,13 @@ export default class PetAddOrEdit extends Component {
               name="name"
               placeholder="Name"
               onChange={this.handleChange}
-              required
             />
           </div>
           <div className="EditOrAddPetFormField">
             <div className="EditOrAddPetFormLabels">
-              <label><p>Bio:</p></label>
+              <label>
+                <p>Bio:</p>
+              </label>
             </div>
             <input
               type="text"
@@ -73,7 +83,6 @@ export default class PetAddOrEdit extends Component {
               name="bio"
               placeholder="Bio"
               onChange={this.handleChange}
-              required
             />
           </div>
           <div className="EditOrAddPetBtns">

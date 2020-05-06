@@ -1,3 +1,17 @@
-.Browse .Posts .PostCard .PostCardImage img {
-  max-width: 300px;
+.Browse {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+.Browse .Posts {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+}
+.Browse .Posts .PostCard {
+  width: 85%;
+  justify-self: center;
+}
+
+.Browse .Posts img {
+  width: 100%;
 }

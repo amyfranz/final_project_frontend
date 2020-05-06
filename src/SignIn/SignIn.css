@@ -8,12 +8,25 @@
   color: #554e4e;
 }
 
+@font-face {
+  font-family: "CatFont";
+  src: url("../CatFont.ttf");
+}
+
 .SignIn {
   top: 0;
   width: 100%;
   margin-top: 1em;
   margin-bottom: 2em;
 }
+
+.SignInForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .SignInForm P {
   text-align: center;
 }
@@ -24,7 +37,7 @@
 
 .SignInForm input {
   width: 95%;
-  margin: 2.5% 5% 2.5% 5%;
+  margin: 2.5% 0 2.5% 0;
   border: none;
   border-bottom: solid #6e6464;
   padding: 0.6em 0.4em 1em;
@@ -64,6 +77,16 @@
   font-size: 1.3rem;
 }
 
+.Errors {
+  margin-bottom: 1em;
+}
+
+.Errors h1 {
+  text-align: center;
+  font-size: 1rem;
+  color: #fabf61;
+}
+
 @media screen and (orientation: landscape) {
   .SignIn {
     top: 0;
@@ -78,11 +101,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     display: block;
+  }
+
+  .SignInLogoImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .SignInLogo img {
+    max-width: 500px;
   }
 
   .SignInLogo h1 {
     font-size: 3rem;
+    font-family: "CatFont";
     text-align: center;
   }
 }
