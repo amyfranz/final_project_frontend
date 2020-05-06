@@ -79,5 +79,6 @@ export default class ShowPost extends Component {
       },
     };
     API.post("comments", body).then((post) => this.setState({ post }));
+    e.target.reset();
   };
 }

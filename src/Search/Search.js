@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ShowUsers from "../components/ShowUsers";
 import API from "../API";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner} from "@fortawesome/free-solid-svg-icons";
+import "./Search.css";
 
 export default class Search extends Component {
   constructor() {
@@ -31,16 +34,18 @@ export default class Search extends Component {
     return (
       <div>
         {this.state.loading ? (
-          <h1>loading...</h1>
+          <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : (
-          <div>
-            <input
-              type="text"
-              placeholder="search for a user using their username"
-              name="search"
-              onChange={(e) => this.setState({ input: e.target.value })}
-              focus="true"
-            />
+          <div className="Search">
+            <div className="SearchInput">
+              <input
+                type="text"
+                placeholder="search usernames..."
+                name="search"
+                onChange={(e) => this.setState({ input: e.target.value })}
+                focus="true"
+              />
+            </div>
             <div>{userResults}</div>
           </div>
         )}

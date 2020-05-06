@@ -1,0 +1,71 @@
+:root {
+  font-size: 16px;
+}
+* {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: #554e4e;
+  overflow-x: hidden;
+}
+
+.Loading {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  margin-left: 25%;
+}
+.Updates {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+.NoUpdates h1 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.ShowUpdates{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 3em 0;
+}
+
+.Updates .PetInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+}
+
+.Updates .PetInfoImage {
+  width: 30%;
+  margin-right: 3em;
+}
+
+.Updates .PetInfoImage img {
+  width: 95%;
+  max-width: 200px;
+  border: solid #fabf61;
+  border-radius: 100%;
+}
+
+.Updates .PetInfo h1 {
+  font-size: 2em;
+  width: auto;
+}
+
+.Updates .PetInfoName {
+  width: auto;
+}
+
+.UpdatePost{
+    width: auto;
+  }
+
+.UpdatePost img {
+  max-width: 500px;
+}

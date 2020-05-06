@@ -88,11 +88,8 @@
 
 .NewComment button {
   width: auto;
-}
-
-.NewComment button {
   border: none;
-  background-color: none;
+  background-color: transparent;
 }
 
 .ShowPostPostStats span {
@@ -106,5 +103,8 @@
   .ShowPostPostStats h3,
   span {
     font-size: 1.5rem;
+  }
+  .DisplayComments {
+    max-height: 20vh;
   }
 }

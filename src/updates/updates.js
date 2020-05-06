@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import API from "../API";
 import Update from "./update";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import "./Updates.css";
 
 export default class updates extends Component {
   constructor() {
@@ -19,13 +22,15 @@ export default class updates extends Component {
     return (
       <div>
         {this.state.loading ? (
-          <h1>Loading...</h1>
+          <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
         ) : (
-          <div>
+          <div className="Updates">
             {this.state.update.length > 0 ? (
               <Update updates={this.state.update} props={this.props} />
             ) : (
-              <h1>You have no new updates</h1>
+              <div className="NoUpdates">
+                <h1>You have no new updates</h1>
+              </div>
             )}
           </div>
         )}

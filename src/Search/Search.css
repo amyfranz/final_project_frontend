@@ -1,0 +1,85 @@
+:root {
+  font-size: 16px;
+}
+* {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: #554e4e;
+  overflow-x: hidden;
+}
+
+.Loading {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  margin-left: 25%;
+}
+
+.Search {
+  margin-top: 90px;
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.SearchInput {
+  width: 70%;
+}
+.Search input {
+  width: 90%;
+  border: solid #554e4e;
+  border-radius: 3em;
+  padding: 0.5em;
+  font-size: 1.3rem;
+}
+
+.Search .ShowUserUserInfo {
+  margin-top: 3em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.Search .ShowUserProfilePic {
+  width: 30%;
+}
+
+.Search .ShowUserProfilePic img {
+  width: 95%;
+  max-width: 300px;
+  border: solid #fabf61;
+  border-radius: 100%;
+}
+
+.Search .ShowUserUserName {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Search .ShowUserUserName h1 {
+  font-size: 2em;
+}
+.Search .ShowUserUserName h2 {
+  font-size: 1.3em;
+}
+
+@media screen and (orientation: landscape) {
+  .Search .ShowUserUserName h1 {
+    font-size: 3em;
+  }
+  .Search .ShowUserUserName h2 {
+    font-size: 2em;
+  }
+
+  .Search .ShowUserUserInfo {
+    margin-top: 6em;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
