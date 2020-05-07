@@ -1,4 +1,4 @@
-const baseURL = "https://dashboard.heroku.com/apps/pet-social-media-app/";
+const baseURL = "https://pet-social-media-app.herokuapp.com/";
 
 const post = (url, data) => {
   const configurationObject = {
