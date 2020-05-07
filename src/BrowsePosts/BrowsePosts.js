@@ -29,7 +29,6 @@ export default class BrowsePosts extends Component {
   }
   getPosts = () => {
     API.get("randomPosts").then((posts) => {
-      console.log(this.state.posts.concat(posts));
       this.state.posts.concat(posts);
       this.setState({ posts: this.state.posts.concat(posts) });
     });

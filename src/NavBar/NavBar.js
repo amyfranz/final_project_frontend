@@ -11,18 +11,21 @@ import {
 export default function NavBar({ history, LoggedUserId }) {
   return (
     <ul className="NavBar">
-      <li onClick={(e) => history.push(`/user_profile/${LoggedUserId}`)}>
+      <li onClick={(e) => history.push("/")}>
         <div className="NavBarLink">
           <div className="NavBarFontAwesome">
-            <FontAwesomeIcon className="NavBarFontAwesomeIcon" icon={faUserAlt} />
+            <FontAwesomeIcon className="NavBarFontAwesomeIcon" icon={faHome} />
           </div>
-          <p>profile</p>
+          <p>browse</p>
         </div>
       </li>
       <li onClick={(e) => history.push("/search")}>
         <div className="NavBarLink">
           <div className="NavBarFontAwesome">
-            <FontAwesomeIcon className="NavBarFontAwesomeIcon" icon={faSearch} />
+            <FontAwesomeIcon
+              className="NavBarFontAwesomeIcon"
+              icon={faSearch}
+            />
           </div>
           <p>search</p>
         </div>
@@ -35,12 +38,15 @@ export default function NavBar({ history, LoggedUserId }) {
           <p>updates</p>
         </div>
       </li>
-      <li onClick={(e) => history.push("/browse")}>
+      <li onClick={(e) => history.push(`/user_profile/${LoggedUserId}`)}>
         <div className="NavBarLink">
           <div className="NavBarFontAwesome">
-            <FontAwesomeIcon className="NavBarFontAwesomeIcon" icon={faHome} />
+            <FontAwesomeIcon
+              className="NavBarFontAwesomeIcon"
+              icon={faUserAlt}
+            />
           </div>
-          <p>browse</p>
+          <p>profile</p>
         </div>
       </li>
     </ul>

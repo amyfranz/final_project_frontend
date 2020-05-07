@@ -134,7 +134,7 @@ export default class UserProfile extends Component {
     }
   };
 
-  cancelProfile = (e) => {
+  cancelDelete = (e) => {
     e.preventDefault();
     this.setState({ delete: false, deleteError: null });
   };

@@ -43,6 +43,7 @@ export default class App extends Component {
     if (token) {
       this.setState({ user, authenticated: true });
       localStorage.token = token;
+      
     } else {
       this.setState({ errorMessage: message });
     }

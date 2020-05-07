@@ -13,20 +13,6 @@ import { Route, withRouter } from "react-router-dom";
 import API from "../API.js";
 
 class Dashboard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      loading: true,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      loading: false,
-    });
-    this.props.history.push(`/user_profile/${this.props.user}`);
-  }
-
   handleSignOut = () => {
     this.props.signOut();
     this.props.history.push("/");
@@ -90,7 +76,8 @@ class Dashboard extends Component {
             )}
           />
           <Route
-            path={`/browse`}
+            exact
+            path={`/`}
             render={(routerProps) => <BrowsePosts {...routerProps} />}
           />
         </div>
