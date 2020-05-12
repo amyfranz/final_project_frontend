@@ -2,9 +2,9 @@
 
 An Instagram clone for posting pictures of pets.
 
-front-end code: [GitHub](https://github.com/amyfranz/final_project_frontend)
+frontend: [GitHub](https://github.com/amyfranz/final_project_frontend)
 
-front-end live: [GitHub](https://github.com/amyfranz/final_project_backend)
+backend: [GitHub](https://github.com/amyfranz/final_project_backend)
 
 ## Installation
 
