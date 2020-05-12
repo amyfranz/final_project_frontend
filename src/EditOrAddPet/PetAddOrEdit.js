@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import "./PetProfile.css";
 import defaultImage from "../paw.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import "./PetAddOrEdit.css";
+import API from "../API";
 
 export default class PetAddOrEdit extends Component {
   constructor(props) {
@@ -10,23 +11,27 @@ export default class PetAddOrEdit extends Component {
     this.state = {
       name: "",
       bio: "",
-      image: "",
+      image: defaultImage,
       loading: false,
+      edit: false,
+      errors: [],
     };
   }
 
   componentDidMount() {
-    if (this.props.pet) {
-      this.setState({
-        name: this.props.pet.name,
-        bio: this.props.pet.bio,
-        image: this.props.pet.profile_pic,
-      });
+    if (!this.props.match.path.includes("users")) {
+      API.get(`pets/${this.props.match.params.id}`).then((pet) =>
+        this.setState({
+          name: pet.name,
+          bio: pet.bio,
+          image: pet.profile_pic,
+          edit: true,
+        })
+      );
     }
   }
 
   render() {
-    const src = this.state.image ? this.state.image : defaultImage;
     return (
       <div className="EditOrAddPet">
         <form
@@ -34,12 +39,14 @@ export default class PetAddOrEdit extends Component {
           onSubmit={(e) =>
             this.state.loading
               ? this.isLoading(e)
-              : this.props.submit(e, this.state.image)
+              : this.state.edit
+              ? this.handleEditPet(e)
+              : this.handleAddPet(e)
           }
         >
           <div className="Errors">
-            {this.props.errors
-              ? this.props.errors.map((error, index) => (
+            {this.state.errors.length > 0
+              ? this.state.errors.map((error, index) => (
                   <h1 key={index}>{error}</h1>
                 ))
               : null}
@@ -48,7 +55,11 @@ export default class PetAddOrEdit extends Component {
             {this.state.loading ? (
               <FontAwesomeIcon icon={faSpinner} spin size="6x" />
             ) : (
-              <img src={src} alt="" className="EditOrAddPetImage" />
+              <img
+                src={this.state.image}
+                alt=""
+                className="EditOrAddPetImage"
+              />
             )}
             <input
               type="file"
@@ -87,7 +98,17 @@ export default class PetAddOrEdit extends Component {
           </div>
           <div className="EditOrAddPetBtns">
             <input type="submit" value="Save" />
-            <button onClick={this.props.goBack}>Back</button>
+            <button
+              onClick={(e) =>
+                this.props.history.push(
+                  this.state.edit
+                    ? `/pets/${this.props.match.params.id}`
+                    : `/users/${this.props.match.params.id}`
+                )
+              }
+            >
+              Back
+            </button>
           </div>
         </form>
       </div>
@@ -116,6 +137,40 @@ export default class PetAddOrEdit extends Component {
   };
   isLoading = (e) => {
     e.preventDefault();
-    alert("please wait till the image is loaded");
+    this.setState({ errors: ["please wait till the image is loaded"] });
+  };
+
+  handleAddPet = (e) => {
+    e.preventDefault();
+    const body = {
+      pet: {
+        name: this.state.name,
+        bio: this.state.bio,
+        user_id: this.props.match.params.id,
+        profile_pic: this.state.image,
+      },
+    };
+    API.post("pets", body).then(({ messages }) => {
+      messages !== "success"
+        ? this.setState({ errors: messages })
+        : this.props.history.push(`/users/${this.props.match.params.id}`);
+    });
+  };
+  handleEditPet = (e) => {
+    e.preventDefault();
+    const body = {
+      pet: {
+        name: this.state.name,
+        bio: this.state.bio,
+        profile_pic: this.state.image,
+      },
+    };
+    API.patch(`pets/${this.props.match.params.id}`, body).then(
+      ({ messages }) => {
+        messages !== "success"
+          ? this.setState({ errors: messages })
+          : this.props.history.push(`/pets/${this.props.match.params.id}`);
+      }
+    );
   };
 }

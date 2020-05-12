@@ -9,7 +9,7 @@ export default function update({ updates, props }) {
           <div className="PetInfo">
             <div
               onClick={(e) =>
-                props.history.push(`/pet_profile/${update.pet_id}`)
+                props.history.push(`/pets/${update.pet_id}`)
               }
               className="PetInfoImage"
             >
@@ -21,7 +21,7 @@ export default function update({ updates, props }) {
           </div>
           <div
             className="UpdatePost"
-            onClick={(e) => props.history.push(`/post/${update.id}`)}
+            onClick={(e) => props.history.push(`/posts/${update.id}`)}
           >
             <PostCard post={update} />
           </div>

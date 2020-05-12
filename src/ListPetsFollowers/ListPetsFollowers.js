@@ -28,7 +28,7 @@ export default class ListPetsFollowers extends Component {
             <div
               key={index}
               onClick={(e) =>
-                this.props.history.push(`/user_profile/${user.user.id}`)
+                this.props.history.push(`/users/${user.user.id}`)
               }
             >
               <ShowUsers user={user.user} />

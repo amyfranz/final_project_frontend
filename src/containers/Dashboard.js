@@ -10,6 +10,9 @@ import Updates from "../updates/updates";
 import BrowsePosts from "../BrowsePosts/BrowsePosts";
 import NavBar from "../NavBar/NavBar";
 import { Route, withRouter } from "react-router-dom";
+import EditUserProfile from "../EditUserProfile/EditProfile";
+import EditOrAddPet from "../EditOrAddPet/PetAddOrEdit";
+import AddPost from "../PostPic/PostPic";
 import API from "../API.js";
 
 class Dashboard extends Component {
@@ -34,7 +37,7 @@ class Dashboard extends Component {
         <div>
           <Route
             exact
-            path={`/user_profile/:id`}
+            path={`/users/:id`}
             render={(routerProps) => (
               <UserProfile
                 {...routerProps}
@@ -44,13 +47,35 @@ class Dashboard extends Component {
             )}
           />
           <Route
-            path={`/pet_profile/:id`}
+            exact
+            path={`/users/:id/edit`}
+            render={(routerProps) => <EditUserProfile {...routerProps} />}
+          />
+          <Route
+            exact
+            path={`/pets/:id`}
             render={(routerProps) => (
               <PetProfile {...routerProps} LoggedUserId={this.props.user} />
             )}
           />
           <Route
-            path={`/post/:id`}
+            exact
+            path={`/pets/:id/posts`}
+            render={(routerProps) => <AddPost {...routerProps} />}
+          />
+          <Route
+            exact
+            path={`/pets/:id/edit`}
+            render={(routerProps) => <EditOrAddPet {...routerProps} />}
+          />
+          <Route
+            exact
+            path={`/users/:id/pets`}
+            render={(routerProps) => <EditOrAddPet {...routerProps} />}
+          />
+          <Route
+            exact
+            path={`/posts/:id`}
             render={(routerProps) => (
               <ShowPost {...routerProps} LoggedUserId={this.props.user} />
             )}
@@ -86,3 +111,21 @@ class Dashboard extends Component {
   }
 }
 export default withRouter(Dashboard);
+
+// submitNewPost = (e, image, effect) => {
+//   e.preventDefault();
+//   const body = {
+//     post: {
+//       bio: e.target.bio.value,
+//       pet_id: this.state.pet.id,
+//       posted: Date.now,
+//       image: image,
+//       effect: effect,
+//     },
+//   };
+//   API.post("posts", body).then(({ pet, messages }) =>
+//     messages
+//       ? this.setState({ PostErrors: messages })
+//       : this.setState({ pet, posting: false, PostErrors: null })
+//   );
+// };

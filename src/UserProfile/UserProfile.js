@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import ShowUserInfo from "./ShowUserInfo";
 import LoggedUserBtns from "./UserBtns";
 import ListPets from "./ListPets";
-import EditProfile from "../UserProfile/EditProfile";
-import PetAddOrEdit from "../PetsProfile/PetAddOrEdit";
 import Destroy from "../Destroy/Destroy";
 import "../Destroy/Destroy.css";
 import API from "../API";
@@ -17,10 +15,6 @@ export default class UserProfile extends Component {
     this.state = {
       loading: true,
       user: "",
-      edit: false,
-      editing: "",
-      PetsErrors: null,
-      UserErrors: null,
       delete: false,
       deleteError: null,
     };
@@ -50,75 +44,39 @@ export default class UserProfile extends Component {
             <FontAwesomeIcon className="Loading" icon={faSpinner} spin />
           </div>
         ) : (
-          <div>
-            {!this.state.edit ? (
-              <div
-                className={`UserProfileShowUser ${
-                  this.state.delete ? "Blur" : ""
-                }`}
-              >
+          <div
+            className={`UserProfileShowUser ${this.state.delete ? "Blur" : ""}`}
+          >
+            <div>
+              <ShowUserInfo
+                user={this.state.user}
+                viewFollowings={this.viewFollowings}
+              />
+            </div>
+            <div>
+              {this.state.user.id === this.props.LoggedUserId ? (
+                <LoggedUserBtns
+                  history={this.props.history}
+                  user={this.state.user.id}
+                  deleteProfile={() => this.setState({ delete: true })}
+                />
+              ) : null}
+            </div>
+            <div>
+              {this.state.user.pets ? (
                 <div>
-                  <ShowUserInfo
-                    user={this.state.user}
-                    viewFollowings={this.viewFollowings}
-                  />
+                  <h1 className="UserProfilePets">Owner of:</h1>
+                  <div className="UserProfilePetProfile">
+                    <ListPets pets={this.state.user.pets} props={this.props} />
+                  </div>
                 </div>
-                <div>
-                  {this.state.user.id === this.props.LoggedUserId ? (
-                    <LoggedUserBtns
-                      editUser={this.editUser}
-                      addPet={this.addPet}
-                      deleteProfile={() => this.setState({ delete: true })}
-                    />
-                  ) : null}
-                </div>
-                <div>
-                  {this.state.user.pets ? (
-                    <div>
-                      <h1 className="UserProfilePets">Owner of:</h1>
-                      <div className="UserProfilePetProfile">
-                        <ListPets
-                          pets={this.state.user.pets}
-                          props={this.props}
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            ) : (
-              <div>
-                {this.state.editing === "user" ? (
-                  <EditProfile
-                    user={this.state.user}
-                    handleEditProfile={this.handleEditProfile}
-                    goBack={this.goBack}
-                    errors={this.state.UserErrors}
-                  />
-                ) : (
-                  <PetAddOrEdit
-                    submit={this.handleAddPet}
-                    goBack={this.goBack}
-                    errors={this.state.PetsErrors}
-                  />
-                )}
-              </div>
-            )}
+              ) : null}
+            </div>
           </div>
         )}
       </div>
     );
   }
-  goBack = () => {
-    this.setState({ edit: false, editing: "" });
-  };
-  editUser = () => {
-    this.setState({ edit: true, editing: "user" });
-  };
-
-  addPet = () => {
-    this.setState({ edit: true, editing: "pet" });
-  };
 
   viewFollowings = () => {
     this.props.history.push(`/list_user_following/${this.state.user.id}`);
@@ -137,41 +95,5 @@ export default class UserProfile extends Component {
   cancelDelete = (e) => {
     e.preventDefault();
     this.setState({ delete: false, deleteError: null });
-  };
-
-  handleEditProfile = (e, image) => {
-    e.preventDefault();
-    const body = {
-      user: {
-        first_name: e.target.first_name.value,
-        last_name: e.target.last_name.value,
-        username: e.target.username.value,
-        email: e.target.email.value,
-        profile_pic: image,
-      },
-    };
-    API.patch(`users/${this.state.user.id}`, body).then(
-      ({ user, messages }) => {
-        messages
-          ? this.setState({ UserErrors: messages })
-          : this.setState({ user, edit: false, editing: "" });
-      }
-    );
-  };
-  handleAddPet = (e, image) => {
-    e.preventDefault();
-    const body = {
-      pet: {
-        name: e.target.name.value,
-        bio: e.target.bio.value,
-        user_id: this.state.user.id,
-        profile_pic: image,
-      },
-    };
-    API.post("pets", body).then(({ user, messages }) => {
-      messages
-        ? this.setState({ PetsErrors: messages })
-        : this.setState({ user, edit: false, editing: "" });
-    });
   };
 }
