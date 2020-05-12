@@ -27,7 +27,7 @@ export default class ListUserFollowings extends Component {
           this.state.pets.map((pet, index) => (
             <div
               onClick={(e) =>
-                this.props.history.push(`/pet_profile/${pet.pet.id}`)
+                this.props.history.push(`/pets/${pet.pet.id}`)
               }
               key={index}
               className="ListUserFollowings"

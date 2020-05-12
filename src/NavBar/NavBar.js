@@ -38,7 +38,7 @@ export default function NavBar({ history, LoggedUserId }) {
           <p>updates</p>
         </div>
       </li>
-      <li onClick={(e) => history.push(`/user_profile/${LoggedUserId}`)}>
+      <li onClick={(e) => history.push(`/users/${LoggedUserId}`)}>
         <div className="NavBarLink">
           <div className="NavBarFontAwesome">
             <FontAwesomeIcon

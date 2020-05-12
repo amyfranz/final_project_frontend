@@ -1,6 +1,12 @@
 import React, { Component } from "react";
+import API from "../API";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import "./EditProfile.css";
+
+// This is code to edit a edit a users profile
+// It was done by Amy Franz
+// Lasted edited on 11/05/2020
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -12,24 +18,21 @@ export default class EditProfile extends Component {
       username: "",
       email: "",
       image: "",
+      user_errors: null,
     };
   }
 
+  // Accessing the users information to prefill the input boxes
   componentDidMount() {
-    this.setState({
-      first_name: this.props.user.first_name,
-      last_name: this.props.user.last_name,
-      username: this.props.user.username,
-      email: this.props.user.email,
-      image: this.props.user.profile_pic,
-    });
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.errors !== this.props.errors) {
-      setTimeout(() => {
-        this.setState({ errors: [] });
-      }, 10000);
-    }
+    API.get(`users/${this.props.match.params.id}`).then((user) =>
+      this.setState({
+        first_name: user.first_name,
+        last_name: user.last_name,
+        username: user.username,
+        email: user.email,
+        image: user.profile_pic,
+      })
+    );
   }
 
   render() {
@@ -38,18 +41,18 @@ export default class EditProfile extends Component {
         <form
           className="EditUserForm"
           onSubmit={(e) =>
-            this.state.loading
-              ? this.isLoading(e)
-              : this.props.handleEditProfile(e, this.state.image)
+            this.state.loading ? this.isLoading(e) : this.handleEditProfile(e)
           }
         >
+          {/* Checks if the state has any errors and if so it prepending the errors at the start of the form*/}
           <div className="Errors">
-            {this.props.errors
-              ? this.props.errors.map((error, index) => (
+            {this.state.user_errors
+              ? this.state.user_errors.map((error, index) => (
                   <h1 key={index}>{error}</h1>
                 ))
               : null}
           </div>
+          {/* Shows a loading sign if the image is loading else it shows the image */}
           <div className="EditUserProfilePic">
             {this.state.loading ? (
               <FontAwesomeIcon icon={faSpinner} spin size="6x" />
@@ -121,15 +124,26 @@ export default class EditProfile extends Component {
           </div>
           <div className="EditUserBtns">
             <input type="submit" value="Save" />
-            <button onClick={this.props.goBack}>Back</button>
+            {/* Sends a user back to the users profile if clicked on the back button */}
+            <button
+              onClick={(e) =>
+                this.props.history.push(`/users/${this.props.match.params.id}`)
+              }
+            >
+              Back
+            </button>
           </div>
         </form>
       </div>
     );
   }
+
+  // Changes the state when an input has been changed
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  // User selects and image and this image is uploaded to cloudinary and is then saved in the state
   fileChange = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -144,11 +158,34 @@ export default class EditProfile extends Component {
       }
     );
     const file = await res.json();
-
     this.setState({ image: file.secure_url, loading: false });
   };
+
+  // Checks if the image has been uploaded to cloudinary and is saved in state
   isLoading = (e) => {
     e.preventDefault();
-    alert("please wait till the image is loaded");
+    this.setState({ user_errors: ["please wait till the image has loaded"] });
+  };
+
+  // Updates the user profile
+  handleEditProfile = (e) => {
+    e.preventDefault();
+    const body = {
+      user: {
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        username: this.state.username,
+        email: this.state.email,
+        profile_pic: this.state.image,
+      },
+    };
+    API.patch(`users/${this.props.match.params.id}`, body).then(
+      ({ messages }) => {
+        // Checks if the patch request has been successful
+        messages !== "success"
+          ? this.setState({ user_errors: messages })
+          : this.props.history.push(`/users/${this.props.match.params.id}`);
+      }
+    );
   };
 }

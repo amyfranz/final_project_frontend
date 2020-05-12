@@ -6,7 +6,7 @@ export default function ListPets({ pets, props }) {
     pets.length > 0
       ? pets.map((pet, index) => (
           <div className="UserProfileDisplayPets"
-            onClick={(e) => props.history.push(`/pet_profile/${pet.id}`)}
+            onClick={(e) => props.history.push(`/pets/${pet.id}`)}
             key={index}
           >
             <PetsInfo pet={pet}/>

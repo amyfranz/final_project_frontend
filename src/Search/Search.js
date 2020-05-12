@@ -23,7 +23,7 @@ export default class Search extends Component {
               <div
                 key={user.id}
                 onClick={(e) =>
-                  this.props.history.push(`/user_profile/${user.id}`)
+                  this.props.history.push(`/users/${user.id}`)
                 }
               >
                 <ShowUsers user={user} />

@@ -7,7 +7,7 @@ export default function Posts({ posts, props }) {
       {posts.map((post, index) => (
         <div
           key={index}
-          onClick={(e) => props.history.push(`/post/${post.id}`)}
+          onClick={(e) => props.history.push(`/posts/${post.id}`)}
           className="PostCard"
         >
           <PostCard post={post} />
