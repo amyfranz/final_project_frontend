@@ -10,7 +10,7 @@ backend: [GitHub](https://github.com/amyfranz/final_project_backend)
 
 1. Clone this repository and the backend repository linked above.
 2. In the backend repo, run bundle install in the terminal. Then run rails s
-3. In the frontend repo (this repo), run npm install in the terminal. Then run npm start to start up the app.
+3. In the frontend repo, run npm install in the terminal. Then run npm start to start up the app.
 
 ## Languages, Frameworks and APIs
 
