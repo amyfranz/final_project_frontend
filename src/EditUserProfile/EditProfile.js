@@ -4,10 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./EditProfile.css";
 
-// This is code to edit a edit a users profile
-// It was done by Amy Franz
-// Lasted edited on 11/05/2020
-
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +18,6 @@ export default class EditProfile extends Component {
     };
   }
 
-  // Accessing the users information to prefill the input boxes
   componentDidMount() {
     API.get(`users/${this.props.match.params.id}`).then((user) =>
       this.setState({
@@ -44,7 +39,6 @@ export default class EditProfile extends Component {
             this.state.loading ? this.isLoading(e) : this.handleEditProfile(e)
           }
         >
-          {/* Checks if the state has any errors and if so it prepending the errors at the start of the form*/}
           <div className="Errors">
             {this.state.user_errors
               ? this.state.user_errors.map((error, index) => (
@@ -52,7 +46,6 @@ export default class EditProfile extends Component {
                 ))
               : null}
           </div>
-          {/* Shows a loading sign if the image is loading else it shows the image */}
           <div className="EditUserProfilePic">
             {this.state.loading ? (
               <FontAwesomeIcon icon={faSpinner} spin size="6x" />
@@ -161,13 +154,11 @@ export default class EditProfile extends Component {
     this.setState({ image: file.secure_url, loading: false });
   };
 
-  // Checks if the image has been uploaded to cloudinary and is saved in state
   isLoading = (e) => {
     e.preventDefault();
     this.setState({ user_errors: ["please wait till the image has loaded"] });
   };
 
-  // Updates the user profile
   handleEditProfile = (e) => {
     e.preventDefault();
     const body = {
@@ -181,7 +172,6 @@ export default class EditProfile extends Component {
     };
     API.patch(`users/${this.props.match.params.id}`, body).then(
       ({ messages }) => {
-        // Checks if the patch request has been successful
         messages !== "success"
           ? this.setState({ user_errors: messages })
           : this.props.history.push(`/users/${this.props.match.params.id}`);

@@ -81,6 +81,7 @@ export default class UserProfile extends Component {
   viewFollowings = () => {
     this.props.history.push(`/list_user_following/${this.state.user.id}`);
   };
+  
   handleDelete = (e) => {
     e.preventDefault();
     if (e.target.delete.value === "delete") {

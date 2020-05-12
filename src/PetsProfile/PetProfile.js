@@ -3,8 +3,6 @@ import PetStats from "./PetStats";
 import PetBtns from "./PetBtns";
 import Posts from "../containers/Posts";
 import PetBtnNotLoggedUser from "./PetBtnNotLoggedUser";
-import PetAddOrEdit from "../EditOrAddPet/PetAddOrEdit";
-import PostPic from "../PostPic/PostPic";
 import API from "../API";
 import Destroy from "../Destroy/Destroy";
 import "../Destroy/Destroy.css";
